@@ -2,16 +2,18 @@
     <string name="app_name">Status Sungai</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="login">Login</string>
+    <string name="username">Username</string>
     <string name="email">Email</string>
+    <string name="invalid_username">Invalid username address</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="password">Password</string>
     <string name="invalid_password">Password must be at least 8 characters</string>
     <string name="login_button">Log In</string>
+    <string name="guest_login_button">Log In as Guest</string>
     <string name="register_dialog">Don\'t have an account yet?</string>
     <string name="register_text_button">Register here!</string>
     <string name="login_failed">Login failed</string>
     <string name="logout">Logout</string>
-    <string name="username">Username</string>
     <string name="story_date">Story Date</string>
     <string name="story_desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto, assumenda dicta doloribus eaque error et eum in ipsa officia quaerat, quas, quo recusandae repudiandae sequi tempore temporibus totam voluptates!</string>
     <string name="upload_story">Upload your story</string>
@@ -47,4 +49,8 @@
     <string name="label_location">Share your location</string>
     <string name="lat_value">Latitude: %1$s</string>
     <string name="lon_value">Longitude: %1$s</string>
+    <string name="or">OR</string>
+    <string name="full_name">Full Name</string>
+    <string name="community">Community</string>
+    <string name="community_hint">Community Name (Optional)</string>
 </resources>

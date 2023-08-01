@@ -14,7 +14,7 @@ data class RegisterModel(
     val name: String? = null,
 
     @field:SerializedName("description")
-    val description: String? = null,
+    val community: String? = null,
 
     @field:SerializedName("active")
     val active: String? = null,

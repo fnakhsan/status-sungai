@@ -29,9 +29,10 @@ class Repository(
                         username = username,
                         password = password,
                         name = name,
-                        description = community,
+                        community = community,
                         type = "relawan",
                         active = "active",
+                        riverId = 2,
                     )
                 )
                 emit(Resource.Success(response))

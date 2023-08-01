@@ -33,7 +33,7 @@ class EmailEditText : AppCompatEditText {
         icEmail = ContextCompat.getDrawable(context, R.drawable.ic_email_24) as Drawable
         compoundDrawablePadding = 12
         setIconDrawable(icEmail)
-        setHint(R.string.email)
+//        setHint(R.string.username)
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 import uin.suka.status.sungai.data.Repository
 import uin.suka.status.sungai.di.Injection
 import uin.suka.status.sungai.ui.login.LoginViewModel
+import uin.suka.status.sungai.ui.register.RegisterViewModel
 
 class ViewModelFactory private constructor(private val repository: Repository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -18,6 +19,9 @@ class ViewModelFactory private constructor(private val repository: Repository) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> return LoginViewModel(
+                repository
+            ) as T
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> return RegisterViewModel(
                 repository
             ) as T
         }
