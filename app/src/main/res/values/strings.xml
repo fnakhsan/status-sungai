@@ -1,3 +1,50 @@
 <resources>
     <string name="app_name">Status Sungai</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="password">Password</string>
+    <string name="invalid_password">Password must be at least 8 characters</string>
+    <string name="login_button">Log In</string>
+    <string name="register_dialog">Don\'t have an account yet?</string>
+    <string name="register_text_button">Register here!</string>
+    <string name="login_failed">Login failed</string>
+    <string name="logout">Logout</string>
+    <string name="username">Username</string>
+    <string name="story_date">Story Date</string>
+    <string name="story_desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto, assumenda dicta doloribus eaque error et eum in ipsa officia quaerat, quas, quo recusandae repudiandae sequi tempore temporibus totam voluptates!</string>
+    <string name="upload_story">Upload your story</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="register_title">Create Your Account</string>
+    <string name="name">Name</string>
+    <string name="name_hint">Your Name</string>
+    <string name="register_button">Register</string>
+    <string name="login_dialog">Already have an account?</string>
+    <string name="login_text_button">Login here!</string>
+    <string name="register_failed">Register failed</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description_hint">Write your description…</string>
+    <string name="upload">Upload</string>
+    <string name="thumbnail">Uploaded Image</string>
+    <string name="error_no_image">Please select your image first</string>
+    <string name="error_no_description">Please write your description</string>
+    <string name="error_no_location">Location not found, please try again</string>
+    <string name="error_upload">Failed to upload your story, please try again with proper connection</string>
+    <string name="loading">Wait a moment…</string>
+    <string name="success_upload">Successfully upload your story</string>
+    <string name="setting">Setting</string>
+    <string name="language">Language</string>
+    <string-array name="language_array">
+        <item>English</item>
+        <item>Indonesia</item>
+    </string-array>
+    <string name="title_home">Home</string>
+    <string name="title_maps">Maps</string>
+    <string name="retry">Retry</string>
+    <string name="label_location">Share your location</string>
+    <string name="lat_value">Latitude: %1$s</string>
+    <string name="lon_value">Longitude: %1$s</string>
 </resources>
