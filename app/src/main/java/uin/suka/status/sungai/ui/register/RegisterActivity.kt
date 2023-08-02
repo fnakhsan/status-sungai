@@ -14,6 +14,8 @@ import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.databinding.ActivityRegisterBinding
+import uin.suka.status.sungai.ui.home.HomeActivity
+import uin.suka.status.sungai.ui.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -46,8 +48,14 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
 
-                tvRegister.setOnClickListener {
-                    val intent = Intent(this@RegisterActivity, RegisterActivity::class.java)
+                btnGuestLogin.setOnClickListener {
+                    val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                tvLogin.setOnClickListener {
+                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
