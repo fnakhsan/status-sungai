@@ -43,8 +43,8 @@
         <item>English</item>
         <item>Indonesia</item>
     </string-array>
-    <string name="title_home">Home</string>
     <string name="title_maps">Maps</string>
+    <string name="title_profile">Profile</string>
     <string name="retry">Retry</string>
     <string name="label_location">Share your location</string>
     <string name="lat_value">Latitude: %1$s</string>
@@ -53,4 +53,6 @@
     <string name="full_name">Full Name</string>
     <string name="community">Community</string>
     <string name="community_hint">Community Name (Optional)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,5 +1,6 @@
 package uin.suka.status.sungai.ui.login
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.databinding.ActivityLoginBinding
+import uin.suka.status.sungai.ui.home.HomeActivity
 import uin.suka.status.sungai.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -71,13 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
                     is Resource.Success -> {
                         showLoading(false)
-                        runOnUiThread {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "SUKSES",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        toHome()
                     }
 
                     is Resource.Error -> {
@@ -92,6 +88,14 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun toHome() {
+        runOnUiThread {
+            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            finish()
         }
     }
 
