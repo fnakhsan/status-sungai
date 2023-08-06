@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
+import uin.suka.status.sungai.core.utils.Const.EXTRA_TOKEN
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.databinding.ActivityLoginBinding
 import uin.suka.status.sungai.ui.home.HomeActivity
@@ -73,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
 
                     is Resource.Success -> {
                         showLoading(false)
-                        toHome()
+                        it.data.data?.accessToken?.let { token -> toHome(token) }
                     }
 
                     is Resource.Error -> {
@@ -91,9 +92,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun toHome() {
+    private fun toHome(token: String) {
         runOnUiThread {
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+            intent.putExtra(EXTRA_TOKEN, token)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             finish()
         }

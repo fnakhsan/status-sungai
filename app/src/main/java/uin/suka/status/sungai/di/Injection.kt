@@ -16,11 +16,9 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore("preferenc
 
 object Injection {
     suspend fun provideRepository(context: Context): Repository {
-        Log.d("login", "8")
         val token = AuthDataStore.getInstance(context.dataStore).getToken().firstOrNull()
-        Log.d("login", "9")
         return Repository.getInstance(
-            ApiConfig.getApiService(token),
+            ApiConfig.getApiService(token), AuthDataStore.getInstance(context.dataStore)
         )
     }
 }

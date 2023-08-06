@@ -2,20 +2,25 @@ package uin.suka.status.sungai.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import uin.suka.status.sungai.R
+import uin.suka.status.sungai.core.utils.Const.AUTH_TAG
+import uin.suka.status.sungai.core.utils.Const.EXTRA_TOKEN
 import uin.suka.status.sungai.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
+    private lateinit var token: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        token = intent.getStringExtra(EXTRA_TOKEN) ?: ""
+        Log.d(AUTH_TAG, token)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController
