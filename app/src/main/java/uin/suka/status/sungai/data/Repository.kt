@@ -8,10 +8,13 @@ import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.data.local.datastore.AuthDataStore
 import uin.suka.status.sungai.data.network.ApiService
+import uin.suka.status.sungai.data.network.model.Data
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
 import uin.suka.status.sungai.data.network.model.RegisterModel
 import uin.suka.status.sungai.data.network.model.RegisterResponse
+import uin.suka.status.sungai.data.network.model.SegmentsItem
+import uin.suka.status.sungai.data.network.model.SegmentsModel
 
 class Repository(
     private val apiService: ApiService,
@@ -76,6 +79,21 @@ class Repository(
             }
         }
     }.flowOn(Dispatchers.IO)
+
+    fun segments(): Flow<Resource<List<SegmentsItem>>> = flow {
+        emit(Resource.Loading)
+        try {
+            val response = apiService.segments()
+            emit(Resource.Success(response.data.segments))
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
 
     companion object {
         @Volatile

@@ -28,8 +28,10 @@ class MainActivity : AppCompatActivity() {
                 factory
             }
             mainViewModel.getToken().collectLatest {
-                showLoading(true)
-                if (it.isNullOrBlank()) toLogin() else toHome(it)
+                runOnUiThread {
+                    showLoading(true)
+                    if (it.isNullOrBlank()) toLogin() else toHome(it)
+                }
             }
         }
     }
@@ -50,8 +52,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        runOnUiThread {
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

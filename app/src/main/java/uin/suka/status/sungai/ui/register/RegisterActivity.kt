@@ -1,5 +1,6 @@
 package uin.suka.status.sungai.ui.register
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -84,9 +85,10 @@ class RegisterActivity : AppCompatActivity() {
                         runOnUiThread {
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "SUKSES",
+                                it.data.message,
                                 Toast.LENGTH_SHORT
                             ).show()
+                            toLogin()
                         }
                     }
 
@@ -95,7 +97,7 @@ class RegisterActivity : AppCompatActivity() {
                         runOnUiThread {
                             Toast.makeText(
                                 this@RegisterActivity,
-                                R.string.login_failed,
+                                it.error.toString(),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -103,6 +105,12 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun toLogin() {
+        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        finish()
     }
 
     private fun showLoading(isLoading: Boolean) {

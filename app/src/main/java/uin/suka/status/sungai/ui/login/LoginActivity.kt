@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
                         runOnUiThread {
                             Toast.makeText(
                                 this@LoginActivity,
-                                R.string.login_failed,
+                                it.error.toString(),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
