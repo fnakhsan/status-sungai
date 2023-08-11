@@ -44,6 +44,7 @@
         <item>Indonesia</item>
     </string-array>
     <string name="title_maps">Maps</string>
+    <string name="title_add">Add</string>
     <string name="title_profile">Profile</string>
     <string name="retry">Retry</string>
     <string name="label_location">Share your location</string>
