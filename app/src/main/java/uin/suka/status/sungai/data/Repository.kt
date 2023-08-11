@@ -15,6 +15,7 @@ import uin.suka.status.sungai.data.network.model.RegisterModel
 import uin.suka.status.sungai.data.network.model.RegisterResponse
 import uin.suka.status.sungai.data.network.model.SegmentsItem
 import uin.suka.status.sungai.data.network.model.SegmentsModel
+import uin.suka.status.sungai.data.network.model.ViewsModel
 
 class Repository(
     private val apiService: ApiService,
@@ -85,6 +86,20 @@ class Repository(
         try {
             val response = apiService.segments()
             emit(Resource.Success(response.data.segments))
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun views(): Flow<Resource<ViewsModel>> = flow {
+        emit(Resource.Loading)
+        try {
+            val response = apiService.views(seasonId = 2, year = 2021)
+            emit(Resource.Success(response))
         } catch (e: Exception) {
             if (e.message.isNullOrBlank()) {
                 emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))

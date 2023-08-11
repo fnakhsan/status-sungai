@@ -53,6 +53,9 @@
     <string name="full_name">Full Name</string>
     <string name="community">Community</string>
     <string name="community_hint">Community Name (Optional)</string>
+    <string name="snippet">Index Biotilik: %1$s</string>
+    <string name="snack_bar_message">Click open to see details</string>
+    <string name="snack_bar_action">Open</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

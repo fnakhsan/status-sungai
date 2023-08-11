@@ -21,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="33">
+        <activity
+            android:name=".ui.details.DetailsActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAP_KEY}" />
