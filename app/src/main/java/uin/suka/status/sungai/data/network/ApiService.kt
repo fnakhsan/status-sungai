@@ -3,7 +3,11 @@ package uin.suka.status.sungai.data.network
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
+import uin.suka.status.sungai.data.network.model.AddPointModel
+import uin.suka.status.sungai.data.network.model.AddPointResponse
+import uin.suka.status.sungai.data.network.model.GetPointModel
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
 import uin.suka.status.sungai.data.network.model.RegisterModel
@@ -32,4 +36,13 @@ interface ApiService {
         @Query("year") year: Int? = null,
         @Query("method") method: String? = null
     ): ViewsModel
+
+    @GET("points")
+    suspend fun getPoints(): GetPointModel
+
+    @POST("points/{segmentId}")
+    suspend fun addPoints(
+        @Path("segmentId") segmentId: String,
+        @Body pointModel: AddPointModel
+    ): AddPointResponse
 }

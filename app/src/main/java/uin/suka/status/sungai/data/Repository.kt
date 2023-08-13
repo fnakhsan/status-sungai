@@ -8,13 +8,12 @@ import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.data.local.datastore.AuthDataStore
 import uin.suka.status.sungai.data.network.ApiService
-import uin.suka.status.sungai.data.network.model.Data
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
+import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.data.network.model.RegisterModel
 import uin.suka.status.sungai.data.network.model.RegisterResponse
 import uin.suka.status.sungai.data.network.model.SegmentsItem
-import uin.suka.status.sungai.data.network.model.SegmentsModel
 import uin.suka.status.sungai.data.network.model.ViewsModel
 
 class Repository(
@@ -100,6 +99,20 @@ class Repository(
         try {
             val response = apiService.views(seasonId = 2, year = 2021)
             emit(Resource.Success(response))
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getPoint(): Flow<Resource<List<PointsItem>>> = flow {
+        emit(Resource.Loading)
+        try {
+            val response = apiService.getPoints()
+            emit(Resource.Success(response.data.points))
         } catch (e: Exception) {
             if (e.message.isNullOrBlank()) {
                 emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))

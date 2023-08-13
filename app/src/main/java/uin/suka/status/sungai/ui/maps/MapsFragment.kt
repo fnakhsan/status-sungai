@@ -1,13 +1,13 @@
 package uin.suka.status.sungai.ui.maps
 
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,11 +24,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.MAP_TAG
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
 import uin.suka.status.sungai.data.Resource
-import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.data.network.model.RiversItem
+import uin.suka.status.sungai.data.network.model.ViewPointsItem
 import uin.suka.status.sungai.databinding.FragmentMapsBinding
 import uin.suka.status.sungai.ui.details.DetailsActivity
 
@@ -156,7 +155,7 @@ class MapsFragment : Fragment() {
         LatLng(-7.72566605315169, 110.38981780776163)*/
     }
 
-    private fun addMarkers(googleMap: GoogleMap, listPoint: List<PointsItem>) {
+    private fun addMarkers(googleMap: GoogleMap, listPoint: List<ViewPointsItem>) {
         listPoint.forEach { point ->
             point.datas.lastOrNull {
                 googleMap.addMarker(

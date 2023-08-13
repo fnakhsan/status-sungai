@@ -10,6 +10,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import uin.suka.status.sungai.data.Repository
 import uin.suka.status.sungai.di.Injection
+import uin.suka.status.sungai.ui.add.AddViewModel
 import uin.suka.status.sungai.ui.login.LoginViewModel
 import uin.suka.status.sungai.ui.main.MainViewModel
 import uin.suka.status.sungai.ui.maps.MapsViewModel
@@ -30,6 +31,9 @@ class ViewModelFactory private constructor(private val repository: Repository) :
                 repository
             ) as T
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> return MapsViewModel(
+                repository
+            ) as T
+            modelClass.isAssignableFrom(AddViewModel::class.java) -> return AddViewModel(
                 repository
             ) as T
         }

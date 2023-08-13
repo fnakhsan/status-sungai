@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 data class ViewsModel(
 
 	@field:SerializedName("data")
-	val data: Data,
+	val data: ViewsData,
 
 	@field:SerializedName("status")
 	val status: String
 )
-data class Data(
+data class ViewsData(
 
 	@field:SerializedName("rivers")
 	val rivers: List<RiversItem>
@@ -43,7 +43,7 @@ data class SegmentsItem(
 	val id: Int,
 
 	@field:SerializedName("points")
-	val points: List<PointsItem>
+	val points: List<ViewPointsItem>
 )
 
 data class DetailsItem(
@@ -58,7 +58,7 @@ data class DetailsItem(
 	val longitude: String
 )
 
-data class PointsItem(
+data class ViewPointsItem(
 
 	@field:SerializedName("datas")
 	val datas: List<DatasItem>,

@@ -22,6 +22,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="33">
         <activity
+            android:name=".ui.biotilik.AddBiotilikActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.point.AddPointActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.details.DetailsActivity"
             android:exported="false" />
 
