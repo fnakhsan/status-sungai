@@ -2,6 +2,7 @@ package uin.suka.status.sungai.data.network
 
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -10,6 +11,7 @@ import uin.suka.status.sungai.data.network.model.AddPointResponse
 import uin.suka.status.sungai.data.network.model.GetPointModel
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
+import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.data.network.model.RegisterModel
 import uin.suka.status.sungai.data.network.model.RegisterResponse
 import uin.suka.status.sungai.data.network.model.SegmentsModel
@@ -38,10 +40,19 @@ interface ApiService {
     ): ViewsModel
 
     @GET("points")
-    suspend fun getPoints(): GetPointModel
+    suspend fun getAllPoints(
+        @Header("Authorization") token: String,
+    ): GetPointModel
+
+    @GET("points/{pointId}")
+    suspend fun getPointById(
+        @Header("Authorization") token: String,
+        @Path("pointId") pointId: String
+    ): PointsItem
 
     @POST("points/{segmentId}")
     suspend fun addPoints(
+        @Header("Authorization") token: String,
         @Path("segmentId") segmentId: String,
         @Body pointModel: AddPointModel
     ): AddPointResponse

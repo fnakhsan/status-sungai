@@ -16,7 +16,7 @@
     <string name="logout">Logout</string>
     <string name="story_date">Story Date</string>
     <string name="story_desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto, assumenda dicta doloribus eaque error et eum in ipsa officia quaerat, quas, quo recusandae repudiandae sequi tempore temporibus totam voluptates!</string>
-    <string name="add_point">Add new point</string>
+    <string name="add_point">Add New Point</string>
     <string name="add_biotilik">Add biotilik</string>
     <string name="lat">Latitude</string>
     <string name="lon">Longitude</string>
@@ -49,8 +49,8 @@
     <string name="title_profile">Profile</string>
     <string name="retry">Retry</string>
     <string name="label_location">Share your location</string>
-    <string name="lat_value">Latitude: %1$s</string>
-    <string name="lon_value">Longitude: %1$s</string>
+    <string name="lat_value">Lat: %1$s</string>
+    <string name="lon_value">Lon: %1$s</string>
     <string name="or">OR</string>
     <string name="full_name">Full Name</string>
     <string name="community">Community</string>
@@ -58,9 +58,11 @@
     <string name="snippet">Index Biotilik: %1$s</string>
     <string name="snack_bar_message">Click open to see details</string>
     <string name="snack_bar_action">Open</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="point_name">Point Name</string>
     <string name="point_status">Point Status</string>
     <string name="point_user">Point User</string>
+    <string name="point_lat">Point Latitude</string>
+    <string name="point_lng">Point Longitude</string>
+    <string name="hello_blank_fragment">halo</string>
 </resources>

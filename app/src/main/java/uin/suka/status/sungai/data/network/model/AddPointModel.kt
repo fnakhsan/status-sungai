@@ -4,17 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class AddPointModel(
 
-	@field:SerializedName("latitude")
-	val latitude: Any,
-
 	@field:SerializedName("name")
 	val name: String,
 
 	@field:SerializedName("active")
 	val active: String,
 
+	@field:SerializedName("latitude")
+	val latitude: Double,
+
 	@field:SerializedName("longitude")
-	val longitude: Any
+	val longitude: Double
 )
 
 data class AddPointResponse(

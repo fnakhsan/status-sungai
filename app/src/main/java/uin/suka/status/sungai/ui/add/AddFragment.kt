@@ -2,24 +2,22 @@ package uin.suka.status.sungai.ui.add
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.databinding.FragmentAddBinding
 import uin.suka.status.sungai.ui.details.DetailsActivity
+import uin.suka.status.sungai.ui.point.AddPointActivity
 
 class AddFragment : Fragment() {
     private var _binding: FragmentAddBinding? = null
@@ -39,46 +37,50 @@ class AddFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         binding.rvPoint.addItemDecoration(itemDecoration)
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-            val addViewModel: AddViewModel by viewModels {
-                factory
-            }
-            addViewModel.apply {
-                getToken().collectLatest { token ->
-                    if (token.isNullOrBlank()) {
-                        showAddContent(false)
-                    } else {
-                        showAddContent(true)
-                        getPoint().collectLatest {
-                            when (it) {
-                                is Resource.Loading -> {
-                                    showLoading(true)
-                                }
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
+        val addViewModel: AddViewModel by viewModels {
+            factory
+        }
+        addViewModel.apply {
+            getToken().observe(viewLifecycleOwner) { token ->
+                if (token.isNullOrBlank()) {
+                    Log.d("Add", "token null")
+                    showAddContent(false)
+                } else {
+                    Log.d("Add", "token not null")
+                    showAddContent(true)
+                    Log.d("Add", "check")
+                    getAllPoints().observe(viewLifecycleOwner) {
+                        when (it) {
+                            is Resource.Loading -> {
+                                Log.d("Add", "loading")
+                                showLoading(true)
+                            }
 
-                                is Resource.Success -> {
-                                    showLoading(false)
-                                    runOnUiThread {
-                                        setListPoints(it.data)
-                                    }
-                                }
+                            is Resource.Success -> {
+                                showLoading(false)
+                                Log.d("Add", "sukses")
+                                setListPoints(it.data)
+                            }
 
-                                is Resource.Error -> {
-                                    showLoading(false)
-                                    runOnUiThread {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            it.error.toString(),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
+                            is Resource.Error -> {
+                                showLoading(false)
+                                Toast.makeText(
+                                    requireContext(),
+                                    it.error.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
-
                 }
+
             }
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(requireContext(), AddPointActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -111,22 +113,22 @@ class AddFragment : Fragment() {
     }
 
     private fun showAddContent(isAlreadyLogin: Boolean) {
-        binding.apply {
-            if (isAlreadyLogin) {
-                layoutNotLogin.root.visibility = View.INVISIBLE
-                fabAdd.visibility = View.VISIBLE
-                rvPoint.visibility = View.VISIBLE
-            } else {
-                layoutNotLogin.root.visibility = View.VISIBLE
-                fabAdd.visibility = View.INVISIBLE
-                rvPoint.visibility = View.INVISIBLE
+        runOnUiThread {
+            binding.apply {
+                if (isAlreadyLogin) {
+                    layoutNotLogin.root.visibility = View.INVISIBLE
+                    fabAdd.visibility = View.VISIBLE
+                    rvPoint.visibility = View.VISIBLE
+                } else {
+                    layoutNotLogin.root.visibility = View.VISIBLE
+                    fabAdd.visibility = View.INVISIBLE
+                    rvPoint.visibility = View.INVISIBLE
+                }
             }
         }
     }
 
     private fun showLoading(isLoading: Boolean) {
-        runOnUiThread {
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

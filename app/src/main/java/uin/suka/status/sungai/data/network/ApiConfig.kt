@@ -8,7 +8,7 @@ import uin.suka.status.sungai.BuildConfig
 
 class ApiConfig {
     companion object {
-        fun getApiService(token: String?): ApiService {
+        fun getApiService(): ApiService {
             val loggingInterceptor =
                 if (BuildConfig.DEBUG) {
                     HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -16,15 +16,9 @@ class ApiConfig {
                     HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
                 }
 
-            val client = OkHttpClient.Builder().apply {
-                this.addInterceptor(loggingInterceptor)
-                if (token != null) this.addInterceptor {
-                    val request = it.request().newBuilder()
-                        .addHeader("Authorization", "Bearer $token")
-                        .build()
-                    it.proceed(request)
-                }
-            }.build()
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL + "v1/")
