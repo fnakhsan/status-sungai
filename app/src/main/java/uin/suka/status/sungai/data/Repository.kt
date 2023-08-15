@@ -11,6 +11,7 @@ import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.data.local.datastore.AuthDataStore
 import uin.suka.status.sungai.data.network.ApiService
 import uin.suka.status.sungai.data.network.model.AddPointModel
+import uin.suka.status.sungai.data.network.model.DataItem
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
 import uin.suka.status.sungai.data.network.model.PointsItem
@@ -114,9 +115,11 @@ class Repository(
     fun getAllPoints(): Flow<Resource<List<PointsItem>>> = channelFlow {
         send(Resource.Loading)
         try {
-            getToken().collectLatest {
-                val response = apiService.getAllPoints(generateBearerToken(it.toString()))
-                send(Resource.Success(response.data.points))
+            getToken().collectLatest { token ->
+                val response = apiService.getAllPoints(generateBearerToken(token.toString()))
+                send(Resource.Success(response.data.points.sortedByDescending {
+                    it.createdAt
+                }))
             }
         } catch (e: Exception) {
             if (e.message.isNullOrBlank()) {
@@ -142,6 +145,30 @@ class Repository(
             }
         }
     }.flowOn(Dispatchers.IO)
+
+    fun getStatusByPointId(pointId: String): Flow<Resource<List<DataItem>>> = channelFlow {
+        send(Resource.Loading)
+        try {
+            getToken().collectLatest { token ->
+                val response =
+                    apiService.getStatusByPointId(generateBearerToken(token.toString()), pointId)
+                response.data?.filter {
+                    it?.status != null
+                }
+                if (response.data != null) {
+                    send(Resource.Success(response.data.filterNotNull()))
+                } else {
+                    send(Resource.Error(UiText.StringResource(R.string.empty_data)))
+                }
+            }
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }
 
     fun addPoint(name: String, latitude: Double, longitude: Double) = channelFlow {
         send(Resource.Loading)

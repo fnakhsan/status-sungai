@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import uin.suka.status.sungai.core.factory.ViewModelFactory
+import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.PointsItem
@@ -101,8 +102,8 @@ class AddFragment : Fragment() {
         adapter.setOnItemClickCallback(object : AddAdapter.OnItemClickCallback {
             override fun onItemClicked(data: PointsItem) {
                 val intent = Intent(requireContext(), DetailsActivity::class.java)
-//                intent.putExtra(Const.EXTRA_TOKEN, token)
-                startActivity(intent)
+                Log.d("point", "kirim $data")
+                startActivity(intent.putExtra(EXTRA_POINT, data))
 //                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
 //                val toDetailFragment = HomeFragmentDirections.actionHomeFragmentToDetailActivity()
 //                toDetailFragment.username = data.login

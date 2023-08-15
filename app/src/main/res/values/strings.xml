@@ -51,6 +51,8 @@
     <string name="label_location">Share your location</string>
     <string name="lat_value">Lat: %1$s</string>
     <string name="lon_value">Lon: %1$s</string>
+    <string name="latitude_value">Latitude: %1$s</string>
+    <string name="longitude_value">Longitude: %1$s</string>
     <string name="or">OR</string>
     <string name="full_name">Full Name</string>
     <string name="community">Community</string>
@@ -65,4 +67,12 @@
     <string name="point_lat">Point Latitude</string>
     <string name="point_lng">Point Longitude</string>
     <string name="hello_blank_fragment">halo</string>
+    <string name="biotilik">Biotilik</string>
+    <string name="point_status_value">%1$s</string>
+    <string name="season_year">Musim %1$s, %2$s</string>
+    <string name="point_famili_value">Jenis Famili: %1$s</string>
+    <string name="point_ept_value">Jenis EPT: %1$s</string>
+    <string name="point_ept_percent_value">Persen EPT: %1$s %%</string>
+    <string name="point_biotilik_value">Index Biotilik: %1$s %%</string>
+    <string name="empty_data">No data found</string>
 </resources>
