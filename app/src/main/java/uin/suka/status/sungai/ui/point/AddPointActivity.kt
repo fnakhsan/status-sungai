@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import uin.suka.status.sungai.core.factory.ViewModelFactory
+import uin.suka.status.sungai.core.utils.UiText.Companion.asString
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.databinding.ActivityAddPointBinding
 
@@ -73,7 +74,7 @@ class AddPointActivity : AppCompatActivity() {
                     showLoading(false)
                     Toast.makeText(
                         this@AddPointActivity,
-                        it.error.toString(),
+                        it.error.asString(this),
                         Toast.LENGTH_SHORT
                     ).show()
 

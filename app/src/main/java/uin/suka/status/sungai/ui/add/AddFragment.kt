@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
+import uin.suka.status.sungai.core.utils.UiText.Companion.asString
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.databinding.FragmentAddBinding
@@ -68,7 +69,7 @@ class AddFragment : Fragment() {
                                 showLoading(false)
                                 Toast.makeText(
                                     requireContext(),
-                                    it.error.toString(),
+                                    it.error.asString(requireContext()),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

@@ -56,14 +56,14 @@ data class DataItem(
 data class BiotilikResult(
 
 	@field:SerializedName("persen_ept")
-	val persenEpt: String? = null,
+	val persenEpt: Float? = null,
 
 	@field:SerializedName("indeks_biotilik")
-	val indeksBiotilik: String? = null,
+	val indeksBiotilik: Float? = null,
 
 	@field:SerializedName("jenis_famili")
-	val jenisFamili: String? = null,
+	val jenisFamili: Int? = null,
 
 	@field:SerializedName("jenis_ept")
-	val jenisEpt: String? = null
+	val jenisEpt: Int? = null
 )

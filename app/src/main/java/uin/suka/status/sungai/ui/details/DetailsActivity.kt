@@ -38,11 +38,11 @@ class DetailsActivity : AppCompatActivity() {
                 tvPointName.text = point.name
                 tvPointUser.text = point.userName
                 tvPointStatus.text = point.active
-                tvPointLat.text =  this@DetailsActivity.getString(R.string.lat_value, point.latitude)
-                tvPointLng.text = this@DetailsActivity.getString(R.string.lon_value, point.longitude)
+                tvPointLat.text =  this@DetailsActivity.getString(R.string.latitude_value, point.latitude)
+                tvPointLng.text = this@DetailsActivity.getString(R.string.longitude_value, point.longitude)
                 fabAdd.setOnClickListener {
                     val intent = Intent(this@DetailsActivity, AddBiotilikActivity::class.java)
-                    intent.putExtra(EXTRA_POINT_ID, point)
+                    intent.putExtra(EXTRA_POINT_ID, point.id)
                     startActivity(intent)
                 }
             }

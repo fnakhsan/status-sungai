@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import uin.suka.status.sungai.data.Repository
 import uin.suka.status.sungai.di.Injection
 import uin.suka.status.sungai.ui.add.AddViewModel
+import uin.suka.status.sungai.ui.biotilik.AddBiotilikViewModel
 import uin.suka.status.sungai.ui.details.DetailsViewModel
 import uin.suka.status.sungai.ui.login.LoginViewModel
 import uin.suka.status.sungai.ui.main.MainViewModel
@@ -37,6 +38,9 @@ class ViewModelFactory private constructor(private val repository: Repository) :
                 repository
             ) as T
             modelClass.isAssignableFrom(AddPointViewModel::class.java) -> return AddPointViewModel(
+                repository
+            ) as T
+            modelClass.isAssignableFrom(AddBiotilikViewModel::class.java) -> return AddBiotilikViewModel(
                 repository
             ) as T
         }

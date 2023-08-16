@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:inputType="textCapWords"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +45,6 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:inputType="numberDecimal|numberSigned"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,7 +67,6 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal|numberSigned"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

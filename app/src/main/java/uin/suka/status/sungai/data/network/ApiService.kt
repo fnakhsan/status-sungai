@@ -6,6 +6,8 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import uin.suka.status.sungai.data.network.model.AddBiotilikModel
+import uin.suka.status.sungai.data.network.model.AddBiotilikResponse
 import uin.suka.status.sungai.data.network.model.AddPointModel
 import uin.suka.status.sungai.data.network.model.AddPointResponse
 import uin.suka.status.sungai.data.network.model.GetPointModel
@@ -63,4 +65,11 @@ interface ApiService {
         @Path("segmentId") segmentId: String,
         @Body pointModel: AddPointModel
     ): AddPointResponse
+
+    @POST("datas/{pointId}")
+    suspend fun addBiotilik(
+        @Header("Authorization") token: String,
+        @Path("pointId") pointId: String,
+        @Body addBiotilikModel: AddBiotilikModel
+    ): AddBiotilikResponse
 }

@@ -7,10 +7,14 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import uin.suka.status.sungai.R
+import uin.suka.status.sungai.core.utils.SeasonType
+import uin.suka.status.sungai.core.utils.SeasonType.Companion.getIdBySeasonValue
 import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.data.local.datastore.AuthDataStore
 import uin.suka.status.sungai.data.network.ApiService
+import uin.suka.status.sungai.data.network.model.AddBiotilikModel
 import uin.suka.status.sungai.data.network.model.AddPointModel
+import uin.suka.status.sungai.data.network.model.BiotilikResult
 import uin.suka.status.sungai.data.network.model.DataItem
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
@@ -190,6 +194,33 @@ class Repository(
             }
         }
     }.flowOn(Dispatchers.IO)
+
+    fun addBiotilik(pointId: String, biotilikResult: BiotilikResult, seasonType: SeasonType, year: Int) =
+        channelFlow {
+            send(Resource.Loading)
+            try {
+                getToken().collectLatest {
+                    val response =
+                        apiService.addBiotilik(
+                            generateBearerToken(it.toString()),
+                            pointId,
+                            AddBiotilikModel(
+                                "biotilik",
+                                biotilikResult,
+                                getIdBySeasonValue(seasonType),
+                                year
+                            )
+                        )
+                    send(Resource.Success(response))
+                }
+            } catch (e: Exception) {
+                if (e.message.isNullOrBlank()) {
+                    send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+                } else {
+                    send(Resource.Error(UiText.DynamicString(e.message.toString())))
+                }
+            }
+        }.flowOn(Dispatchers.IO)
 
     private fun generateBearerToken(token: String): String {
         return if (token.contains("bearer", true)) {
