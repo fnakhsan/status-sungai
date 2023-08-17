@@ -12,9 +12,9 @@ import uin.suka.status.sungai.data.network.model.AddPointModel
 import uin.suka.status.sungai.data.network.model.AddPointResponse
 import uin.suka.status.sungai.data.network.model.GetPointModel
 import uin.suka.status.sungai.data.network.model.GetStatusDataResponse
+import uin.suka.status.sungai.data.network.model.GetUserResponse
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
-import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.data.network.model.RegisterModel
 import uin.suka.status.sungai.data.network.model.RegisterResponse
 import uin.suka.status.sungai.data.network.model.SegmentsModel
@@ -47,11 +47,11 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): GetPointModel
 
-    @GET("points/{pointId}")
-    suspend fun getPointById(
-        @Header("Authorization") token: String,
-        @Path("pointId") pointId: String
-    ): PointsItem
+//    @GET("points/{pointId}")
+//    suspend fun getPointById(
+//        @Header("Authorization") token: String,
+//        @Path("pointId") pointId: String
+//    ): PointsItem
 
     @GET("datas/{pointId}")
     suspend fun getStatusByPointId(
@@ -72,4 +72,10 @@ interface ApiService {
         @Path("pointId") pointId: String,
         @Body addBiotilikModel: AddBiotilikModel
     ): AddBiotilikResponse
+
+    @GET("users/{userId}")
+    suspend fun getUserByUserId(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String
+    ): GetUserResponse
 }

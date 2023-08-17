@@ -81,6 +81,7 @@
     <string name="empty_data">No data found</string>
     <string name="season">Season</string>
     <string name="year">Year</string>
+    <string name="guest">GUEST</string>
     <string-array name="season_array">
         <item>Musim Kemarau (April - Oktober)</item>
         <item>Musim Hujan (November - Maret)</item>

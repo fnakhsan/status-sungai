@@ -3,6 +3,7 @@ package uin.suka.status.sungai.data.local.datastore
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -44,13 +45,13 @@ class AuthDataStore private constructor(private val dataStore: DataStore<Prefere
         }
     }
 
-    fun getUserId(): Flow<String?> {
+    fun getUserId(): Flow<Int?> {
         return dataStore.data.map { preferences ->
             preferences[USER_KEY]
         }
     }
 
-    suspend fun saveUserId(userId: String) {
+    suspend fun saveUserId(userId: Int) {
         dataStore.edit { preferences ->
             preferences[USER_KEY] = userId
         }
@@ -64,8 +65,8 @@ class AuthDataStore private constructor(private val dataStore: DataStore<Prefere
 
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("token")
-        private val USER_KEY = stringPreferencesKey("user")
         private val ROLE_KEY = stringPreferencesKey("role")
+        private val USER_KEY = intPreferencesKey("user")
         @Volatile
         private var INSTANCE: AuthDataStore? = null
         fun getInstance(dataStore: DataStore<Preferences>): AuthDataStore {

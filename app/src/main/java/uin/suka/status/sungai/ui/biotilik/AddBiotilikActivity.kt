@@ -15,7 +15,7 @@ import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.BiotilikResult
 import uin.suka.status.sungai.databinding.ActivityAddBiotilikBinding
-import uin.suka.status.sungai.ui.components.Toast
+import uin.suka.status.sungai.ui.components.errorToast
 
 
 class AddBiotilikActivity : AppCompatActivity() {
@@ -82,15 +82,12 @@ class AddBiotilikActivity : AppCompatActivity() {
                             is Resource.Error -> {
                                 showLoading(false)
                                 Log.d("biotilik", it.error.toString())
-                                Toast.errorToast(this@AddBiotilikActivity, it.error)
+                                this@AddBiotilikActivity.errorToast(it.error)
                             }
                         }
                     }
                 } else {
-                    Toast.errorToast(
-                        this@AddBiotilikActivity,
-                        UiText.DynamicString("Please fill the required field")
-                    )
+                    this@AddBiotilikActivity.errorToast(UiText.DynamicString("Please fill the required field"))
                 }
             }
         }

@@ -10,12 +10,14 @@ import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.utils.SeasonType
 import uin.suka.status.sungai.core.utils.SeasonType.Companion.getIdBySeasonValue
 import uin.suka.status.sungai.core.utils.UiText
+import uin.suka.status.sungai.core.utils.UserType
 import uin.suka.status.sungai.data.local.datastore.AuthDataStore
 import uin.suka.status.sungai.data.network.ApiService
 import uin.suka.status.sungai.data.network.model.AddBiotilikModel
 import uin.suka.status.sungai.data.network.model.AddPointModel
 import uin.suka.status.sungai.data.network.model.BiotilikResult
 import uin.suka.status.sungai.data.network.model.DataItem
+import uin.suka.status.sungai.data.network.model.GetUserResponse
 import uin.suka.status.sungai.data.network.model.LoginModel
 import uin.suka.status.sungai.data.network.model.LoginResponse
 import uin.suka.status.sungai.data.network.model.PointsItem
@@ -34,8 +36,28 @@ class Repository(
         authDataStore.saveToken(token)
     }
 
-    suspend fun clearToken() {
+    private suspend fun clearToken() {
         authDataStore.clearToken()
+    }
+
+    fun getRole(): Flow<String?> = authDataStore.getRole()
+
+    private suspend fun saveRole(role: String) {
+        authDataStore.saveRole(role)
+    }
+
+    private suspend fun clearRole() {
+        authDataStore.clearRole()
+    }
+
+    fun getUserId(): Flow<Int?> = authDataStore.getUserId()
+
+    private suspend fun saveUserId(userId: Int) {
+        authDataStore.saveUserId(userId)
+    }
+
+    private suspend fun clearUserId() {
+        authDataStore.clearUserId()
     }
 
     fun registerUser(
@@ -77,8 +99,26 @@ class Repository(
                     password = password
                 )
             )
-            response.data?.accessToken?.let { saveToken(it) }
+            response.data.accessToken.let { saveToken(it) }
+            response.data.type.let { saveRole(it) }
+            response.data.id.let { saveUserId(it) }
             emit(Resource.Success(response))
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun logoutUser(): Flow<Resource<UiText>> = flow {
+        emit(Resource.Loading)
+        try {
+            clearToken()
+            clearRole()
+            clearUserId()
+            emit(Resource.Success(UiText.StringResource(R.string.logout)))
         } catch (e: Exception) {
             if (e.message.isNullOrBlank()) {
                 emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
@@ -134,21 +174,21 @@ class Repository(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getPointById(pointId: String): Flow<Resource<PointsItem>> = channelFlow {
-        send(Resource.Loading)
-        try {
-            getToken().collectLatest {
-                val response = apiService.getPointById(generateBearerToken(it.toString()), pointId)
-                send(Resource.Success(response))
-            }
-        } catch (e: Exception) {
-            if (e.message.isNullOrBlank()) {
-                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
-            } else {
-                send(Resource.Error(UiText.DynamicString(e.message.toString())))
-            }
-        }
-    }.flowOn(Dispatchers.IO)
+//    fun getPointById(pointId: String): Flow<Resource<PointsItem>> = channelFlow {
+//        send(Resource.Loading)
+//        try {
+//            getToken().collectLatest {
+//                val response = apiService.getPointById(generateBearerToken(it.toString()), pointId)
+//                send(Resource.Success(response))
+//            }
+//        } catch (e: Exception) {
+//            if (e.message.isNullOrBlank()) {
+//                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+//            } else {
+//                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+//            }
+//        }
+//    }.flowOn(Dispatchers.IO)
 
     fun getStatusByPointId(pointId: String): Flow<Resource<List<DataItem>>> = channelFlow {
         send(Resource.Loading)
@@ -195,7 +235,12 @@ class Repository(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun addBiotilik(pointId: String, biotilikResult: BiotilikResult, seasonType: SeasonType, year: Int) =
+    fun addBiotilik(
+        pointId: String,
+        biotilikResult: BiotilikResult,
+        seasonType: SeasonType,
+        year: Int
+    ) =
         channelFlow {
             send(Resource.Loading)
             try {
@@ -221,6 +266,26 @@ class Repository(
                 }
             }
         }.flowOn(Dispatchers.IO)
+
+    fun getUserById(userId: String): Flow<Resource<GetUserResponse>> = channelFlow {
+        send(Resource.Loading)
+        try {
+            getToken().collectLatest { token ->
+                if (token.isNullOrBlank()) {
+                    send(Resource.Error(UiText.DynamicString(UserType.GUEST.type)))
+                } else {
+                    val response = apiService.getUserByUserId(generateBearerToken(token), userId)
+                    send(Resource.Success(response))
+                }
+            }
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
 
     private fun generateBearerToken(token: String): String {
         return if (token.contains("bearer", true)) {

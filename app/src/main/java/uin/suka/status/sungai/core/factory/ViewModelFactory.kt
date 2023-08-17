@@ -12,6 +12,7 @@ import uin.suka.status.sungai.ui.login.LoginViewModel
 import uin.suka.status.sungai.ui.main.MainViewModel
 import uin.suka.status.sungai.ui.maps.MapsViewModel
 import uin.suka.status.sungai.ui.point.AddPointViewModel
+import uin.suka.status.sungai.ui.profile.ProfileViewModel
 import uin.suka.status.sungai.ui.register.RegisterViewModel
 
 class ViewModelFactory private constructor(private val repository: Repository) :
@@ -41,6 +42,9 @@ class ViewModelFactory private constructor(private val repository: Repository) :
                 repository
             ) as T
             modelClass.isAssignableFrom(AddBiotilikViewModel::class.java) -> return AddBiotilikViewModel(
+                repository
+            ) as T
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> return ProfileViewModel(
                 repository
             ) as T
         }

@@ -14,7 +14,7 @@ import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.DataItem
 import uin.suka.status.sungai.databinding.FragmentDetailBinding
-import uin.suka.status.sungai.ui.components.Toast
+import uin.suka.status.sungai.ui.components.errorToast
 
 
 class DetailFragment : Fragment() {
@@ -55,7 +55,7 @@ class DetailFragment : Fragment() {
                 is Resource.Error -> {
                     showLoading(false)
                     Log.d("point", it.error.toString())
-                    Toast.errorToast(requireContext(), it.error)
+                    requireContext().errorToast(it.error)
                 }
             }
         }
