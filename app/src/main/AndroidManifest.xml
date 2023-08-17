@@ -23,12 +23,15 @@
         tools:targetApi="33">
         <activity
             android:name=".ui.biotilik.AddBiotilikActivity"
+            android:theme="@style/AppTheme"
             android:exported="false" />
         <activity
             android:name=".ui.point.AddPointActivity"
+            android:theme="@style/AppTheme"
             android:exported="false" />
         <activity
             android:name=".ui.details.DetailsActivity"
+            android:theme="@style/AppTheme"
             android:exported="false" />
 
         <meta-data
@@ -37,9 +40,11 @@
 
         <activity
             android:name=".ui.home.HomeActivity"
+            android:theme="@style/HomeTheme"
             android:exported="false" />
         <activity
             android:name=".ui.register.RegisterActivity"
+            android:theme="@style/AppTheme"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -47,6 +52,7 @@
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppTheme"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -54,6 +60,7 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
+            android:theme="@style/SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
