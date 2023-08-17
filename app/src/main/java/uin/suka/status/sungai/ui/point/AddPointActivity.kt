@@ -1,11 +1,24 @@
 package uin.suka.status.sungai.ui.point
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.launch
+import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
+import uin.suka.status.sungai.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
 import uin.suka.status.sungai.core.utils.UiText.Companion.asString
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.databinding.ActivityAddPointBinding
@@ -15,19 +28,45 @@ class AddPointActivity : AppCompatActivity() {
     private lateinit var pointName: String
     private var pointLat: Double? = null
     private var pointLng: Double? = null
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var location: Location? = null
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    getMyLastLocation()
+                }
+
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    getMyLastLocation()
+                }
+
+                else -> {
+                    binding.switchLocation.isChecked = false
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPointBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.apply {
-            edtPointName.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
-            }
-            edtPointLat.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
-            }
-            edtPointLng.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
+            textIsNotBlankListener(edtPointName)
+            textIsNotBlankListener(edtPointLat)
+            textIsNotBlankListener(edtPointLng)
+            switchLocation.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+                if (isChecked) {
+                    lifecycleScope.launch {
+                        getMyLastLocation()
+                    }
+                } else {
+                    location = null
+                }
             }
             btnAddPoint.setOnClickListener {
                 if (edtPointName.error.isNullOrBlank() && edtPointLat.error.isNullOrBlank() && edtPointLng.error.isNullOrBlank()) {
@@ -49,6 +88,7 @@ class AddPointActivity : AppCompatActivity() {
                 }
             }
         }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@AddPointActivity)
     }
 
     private fun submit(
@@ -80,6 +120,45 @@ class AddPointActivity : AppCompatActivity() {
 
                 }
             }
+        }
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getMyLastLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    this.location = location
+                    runOnUiThread {
+                        binding.edtPointLat.setText(location.latitude.toString())
+                        binding.edtPointLng.setText(location.longitude.toString())
+                    }
+                } else {
+                    Toast.makeText(
+                        this@AddPointActivity,
+                        R.string.error_no_location,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.switchLocation.isChecked = false
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
         }
     }
 

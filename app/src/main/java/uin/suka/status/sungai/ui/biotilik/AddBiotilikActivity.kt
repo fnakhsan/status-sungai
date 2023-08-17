@@ -11,6 +11,7 @@ import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
 import uin.suka.status.sungai.core.utils.SeasonType.Companion.getSeasonTypeById
+import uin.suka.status.sungai.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
 import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.BiotilikResult
@@ -37,18 +38,10 @@ class AddBiotilikActivity : AppCompatActivity() {
         binding.apply {
             edtSeason.setAdapter(seasonAdapter)
             edtYear.setAdapter(yearAdapter)
-            edtEpt.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
-            }
-            edtPercent.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
-            }
-            edtFamili.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
-            }
-            edtBiotilik.apply {
-                error = if (text?.length == 0) "This field cannot be empty" else null
-            }
+            textIsNotBlankListener(edtEpt)
+            textIsNotBlankListener(edtPercent)
+            textIsNotBlankListener(edtFamili)
+            textIsNotBlankListener(edtBiotilik)
             btnAddBiotilik.setOnClickListener {
                 if (edtEpt.error.isNullOrBlank() && edtPercent.error.isNullOrBlank() && edtFamili.error.isNullOrBlank() && edtBiotilik.error.isNullOrBlank()) {
                     val biotilik = BiotilikResult(
