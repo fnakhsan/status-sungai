@@ -10,6 +10,7 @@ import uin.suka.status.sungai.data.network.model.AddBiotilikModel
 import uin.suka.status.sungai.data.network.model.AddBiotilikResponse
 import uin.suka.status.sungai.data.network.model.AddPointModel
 import uin.suka.status.sungai.data.network.model.AddPointResponse
+import uin.suka.status.sungai.data.network.model.GetPointByIdResponse
 import uin.suka.status.sungai.data.network.model.GetPointModel
 import uin.suka.status.sungai.data.network.model.GetStatusDataResponse
 import uin.suka.status.sungai.data.network.model.GetUserResponse
@@ -47,11 +48,11 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): GetPointModel
 
-//    @GET("points/{pointId}")
-//    suspend fun getPointById(
-//        @Header("Authorization") token: String,
-//        @Path("pointId") pointId: String
-//    ): PointsItem
+    @GET("points/{pointId}")
+    suspend fun getPointById(
+        @Header("Authorization") token: String,
+        @Path("pointId") pointId: String
+    ): GetPointByIdResponse
 
     @GET("datas/{pointId}")
     suspend fun getStatusByPointId(

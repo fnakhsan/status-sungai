@@ -13,6 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
+import uin.suka.status.sungai.core.utils.UserType
+import uin.suka.status.sungai.core.utils.UserType.Companion.getTypeByUserType
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.databinding.ActivityRegisterBinding
 import uin.suka.status.sungai.ui.home.HomeActivity
@@ -51,6 +53,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 btnGuestLogin.setOnClickListener {
                     val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+                    registerViewModel.setRole(getTypeByUserType(UserType.GUEST))
                     startActivity(intent)
                     finish()
                 }

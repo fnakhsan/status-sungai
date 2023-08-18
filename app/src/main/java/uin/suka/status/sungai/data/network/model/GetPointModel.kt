@@ -19,6 +19,16 @@ data class PointsData(
     val points: List<PointsItem>
 )
 
+
+data class GetPointByIdResponse(
+
+    @field:SerializedName("data")
+    val data: List<PointsItem>,
+
+    @field:SerializedName("status")
+    val status: String
+)
+
 @Parcelize
 data class PointsItem(
 

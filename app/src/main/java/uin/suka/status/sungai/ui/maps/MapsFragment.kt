@@ -20,7 +20,9 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.snackbar.Snackbar
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
+import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
+import uin.suka.status.sungai.core.utils.UserType
 import uin.suka.status.sungai.data.Resource
 import uin.suka.status.sungai.data.network.model.RiversItem
 import uin.suka.status.sungai.data.network.model.ViewPointsItem
@@ -45,45 +47,38 @@ class MapsFragment : Fragment() {
             isMapToolbarEnabled = true
         }
 
-        googleMap.setOnMarkerClickListener {
-            showSnackBar()
-            false
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
+        val mapsViewModel: MapsViewModel by viewModels {
+            factory
         }
-
-
 //        val sydney = LatLng(-34.0, 151.0)
 //        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mapsViewModel.views().observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                    showLoading(true)
+                }
 
-            val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-            val mapsViewModel: MapsViewModel by viewModels {
-                factory
-            }
-            mapsViewModel.views().observe(viewLifecycleOwner) {
-                when (it) {
-                    is Resource.Loading -> {
-                        showLoading(true)
+                is Resource.Success -> {
+                    showLoading(false)
+                    runOnUiThread {
+                        showRiver(googleMap, it.data.data.rivers, mapsViewModel)
                     }
+                }
 
-                    is Resource.Success -> {
-                        showLoading(false)
-                        runOnUiThread {
-                            showRiver(googleMap, it.data.data.rivers)
-                        }
-                    }
-
-                    is Resource.Error -> {
-                        showLoading(false)
-                        runOnUiThread {
-                            Toast.makeText(
-                                requireContext(),
-                                it.error.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                is Resource.Error -> {
+                    showLoading(false)
+                    runOnUiThread {
+                        Toast.makeText(
+                            requireContext(),
+                            it.error.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
+        }
 
     }
 
@@ -110,7 +105,7 @@ class MapsFragment : Fragment() {
         _binding = null
     }
 
-    private fun showRiver(googleMap: GoogleMap, listRiver: List<RiversItem>) {
+    private fun showRiver(googleMap: GoogleMap, listRiver: List<RiversItem>, mapsViewModel: MapsViewModel) {
         val allLatLngList = mutableListOf<LatLng>()
         listRiver.forEach { river ->
             val latLngList = mutableListOf<LatLng>()
@@ -119,7 +114,7 @@ class MapsFragment : Fragment() {
                     latLngList.add(LatLng(it.latitude.toDouble(), it.longitude.toDouble()))
                     allLatLngList.add(LatLng(it.latitude.toDouble(), it.longitude.toDouble()))
                 }
-                addMarkers(googleMap, segment.points)
+                addMarkers(googleMap, segment.points, mapsViewModel)
             }
             val polyline1 =
                 googleMap.addPolyline(
@@ -150,7 +145,7 @@ class MapsFragment : Fragment() {
         LatLng(-7.72566605315169, 110.38981780776163)*/
     }
 
-    private fun addMarkers(googleMap: GoogleMap, listPoint: List<ViewPointsItem>) {
+    private fun addMarkers(googleMap: GoogleMap, listPoint: List<ViewPointsItem>, mapsViewModel: MapsViewModel) {
         listPoint.forEach { point ->
             point.datas.lastOrNull {
                 googleMap.addMarker(
@@ -164,19 +159,29 @@ class MapsFragment : Fragment() {
                 )
                 true
             }
+            googleMap.setOnMarkerClickListener { _ ->
+                showSnackBar(mapsViewModel, point.id)
+                false
+            }
         }
     }
 
-    private fun showSnackBar() {
-//        val message = eventMessage.getContentIfNotHandled() ?: return
-        Snackbar.make(
-            requireView(),
-            getString(R.string.snack_bar_message),
-            Snackbar.LENGTH_SHORT
-        ).setAction(getString(R.string.snack_bar_action)) {
-            val intent = Intent(activity, DetailsActivity::class.java)
-            startActivity(intent)
-        }.show()
+    private fun showSnackBar(mapsViewModel: MapsViewModel, pointId: Int) {
+        mapsViewModel.getRole().observe(viewLifecycleOwner) {
+            when(it) {
+                UserType.GUEST.type -> {}
+                else -> {
+                    Snackbar.make(
+                        requireView(),
+                        getString(R.string.snack_bar_message),
+                        Snackbar.LENGTH_SHORT
+                    ).setAction(getString(R.string.snack_bar_action)) {
+                        val intent = Intent(activity, DetailsActivity::class.java)
+                        startActivity(intent.putExtra(EXTRA_POINT_ID, pointId))
+                    }.show()
+                }
+            }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -42,7 +42,7 @@ class Repository(
 
     fun getRole(): Flow<String?> = authDataStore.getRole()
 
-    private suspend fun saveRole(role: String) {
+    suspend fun saveRole(role: String) {
         authDataStore.saveRole(role)
     }
 
@@ -174,21 +174,21 @@ class Repository(
         }
     }.flowOn(Dispatchers.IO)
 
-//    fun getPointById(pointId: String): Flow<Resource<PointsItem>> = channelFlow {
-//        send(Resource.Loading)
-//        try {
-//            getToken().collectLatest {
-//                val response = apiService.getPointById(generateBearerToken(it.toString()), pointId)
-//                send(Resource.Success(response))
-//            }
-//        } catch (e: Exception) {
-//            if (e.message.isNullOrBlank()) {
-//                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
-//            } else {
-//                send(Resource.Error(UiText.DynamicString(e.message.toString())))
-//            }
-//        }
-//    }.flowOn(Dispatchers.IO)
+    fun getPointById(pointId: String): Flow<Resource<PointsItem>> = channelFlow {
+        send(Resource.Loading)
+        try {
+            getToken().collectLatest {
+                val response = apiService.getPointById(generateBearerToken(it.toString()), pointId)
+                send(Resource.Success(response.data.first()))
+            }
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
 
     fun getStatusByPointId(pointId: String): Flow<Resource<List<DataItem>>> = channelFlow {
         send(Resource.Loading)

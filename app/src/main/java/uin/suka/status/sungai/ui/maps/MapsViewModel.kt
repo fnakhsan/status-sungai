@@ -10,4 +10,6 @@ class MapsViewModel(private val repository: Repository) : ViewModel() {
 
     fun views() = repository.views().asLiveData(Dispatchers.IO)
 
+    fun getRole() = repository.getRole().asLiveData(Dispatchers.IO)
+
 }

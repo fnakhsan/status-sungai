@@ -1,6 +1,9 @@
 package uin.suka.status.sungai.ui.register
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import uin.suka.status.sungai.data.Repository
 
 class RegisterViewModel(private val repository: Repository) : ViewModel() {
@@ -15,4 +18,8 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
         name = name,
         community = community
     )
+
+    fun setRole(role: String) = viewModelScope.launch(Dispatchers.IO) {
+        repository.saveRole(role)
+    }
 }

@@ -8,4 +8,6 @@ import uin.suka.status.sungai.data.Repository
 class DetailsViewModel(private val repository: Repository) : ViewModel() {
     fun getStatusByPointId(pointId: String) =
         repository.getStatusByPointId(pointId).asLiveData(Dispatchers.IO)
+
+    fun getPointById(pointId: String) = repository.getPointById(pointId).asLiveData(Dispatchers.IO)
 }
