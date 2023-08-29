@@ -37,6 +37,7 @@ class ProfileFragment : Fragment() {
         val profileViewModel: ProfileViewModel by viewModels {
             factory
         }
+        
         profileViewModel.getUserId().observe(viewLifecycleOwner) { id ->
             profileViewModel.getUserById(id.toString()).observe(viewLifecycleOwner) {
                 when (it) {
@@ -82,6 +83,11 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun showProfile(profile: User) {

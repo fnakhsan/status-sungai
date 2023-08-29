@@ -79,9 +79,15 @@
     <string name="ept_percent">Persen EPT</string>
     <string name="index_biotilik">Index Biotilik</string>
     <string name="empty_data">No data found</string>
+    <string name="river">River</string>
     <string name="season">Season</string>
     <string name="year">Year</string>
     <string name="guest">GUEST</string>
+    <string name="title_filter">Filter</string>
+    <string-array name="river_array">
+        <item>Sungai Gajah Wong</item>
+        <item>Sungai Boyong</item>
+    </string-array>
     <string-array name="season_array">
         <item>Musim Kemarau (April - Oktober)</item>
         <item>Musim Hujan (November - Maret)</item>
@@ -109,4 +115,5 @@
         <item>2004</item>
         <item>2003</item>
     </string-array>
+    <string name="lorem">lorem</string>
 </resources>

@@ -9,7 +9,11 @@
         android:id="@+id/mapsFragment"
         android:name="uin.suka.status.sungai.ui.maps.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_mapsFilterFragment"
+            app:destination="@id/mapsFilterFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="uin.suka.status.sungai.ui.add.AddFragment"
@@ -21,4 +25,13 @@
         android:name="uin.suka.status.sungai.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <dialog
+        android:id="@+id/mapsFilterFragment"
+        android:name="uin.suka.status.sungai.ui.filter.MapsFilterFragment"
+        android:label="fragment_maps_filter"
+        tools:layout="@layout/fragment_maps_filter" >
+        <action
+            android:id="@+id/action_mapsFilterFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </dialog>
 </navigation>

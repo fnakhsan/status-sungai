@@ -8,6 +8,7 @@ import uin.suka.status.sungai.di.Injection
 import uin.suka.status.sungai.ui.add.AddViewModel
 import uin.suka.status.sungai.ui.biotilik.AddBiotilikViewModel
 import uin.suka.status.sungai.ui.details.DetailsViewModel
+import uin.suka.status.sungai.ui.home.HomeViewModel
 import uin.suka.status.sungai.ui.login.LoginViewModel
 import uin.suka.status.sungai.ui.main.MainViewModel
 import uin.suka.status.sungai.ui.maps.MapsViewModel
@@ -27,6 +28,9 @@ class ViewModelFactory private constructor(private val repository: Repository) :
                 repository
             ) as T
             modelClass.isAssignableFrom(MainViewModel::class.java) -> return MainViewModel(
+                repository
+            ) as T
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> return HomeViewModel(
                 repository
             ) as T
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> return MapsViewModel(

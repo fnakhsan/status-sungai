@@ -5,13 +5,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import uin.suka.status.sungai.R
+import uin.suka.status.sungai.core.utils.FragmentUtil
 import uin.suka.status.sungai.core.utils.SeasonType
 import uin.suka.status.sungai.core.utils.SeasonType.Companion.getIdBySeasonValue
 import uin.suka.status.sungai.core.utils.UiText
 import uin.suka.status.sungai.core.utils.UserType
 import uin.suka.status.sungai.data.local.datastore.AuthDataStore
+import uin.suka.status.sungai.data.local.datastore.FilterDataStore
 import uin.suka.status.sungai.data.network.ApiService
 import uin.suka.status.sungai.data.network.model.AddBiotilikModel
 import uin.suka.status.sungai.data.network.model.AddPointModel
@@ -28,8 +31,15 @@ import uin.suka.status.sungai.data.network.model.ViewsModel
 
 class Repository(
     private val apiService: ApiService,
-    private val authDataStore: AuthDataStore
+    private val authDataStore: AuthDataStore,
+    private val filterDataStore: FilterDataStore
 ) {
+    private var fragmentData = flowOf(FragmentUtil.MAPS).flowOn(Dispatchers.IO)
+    fun getFragmentData(): Flow<FragmentUtil> = fragmentData.flowOn(Dispatchers.IO)
+    fun setFragmentData(fragmentUtil: FragmentUtil) {
+        fragmentData = flowOf(fragmentUtil).flowOn(Dispatchers.IO)
+    }
+
     fun getToken(): Flow<String?> = authDataStore.getToken()
 
     private suspend fun saveToken(token: String) {
@@ -58,6 +68,36 @@ class Repository(
 
     private suspend fun clearUserId() {
         authDataStore.clearUserId()
+    }
+
+    fun getRiverId(): Flow<Int?> = filterDataStore.getRiverId()
+
+    suspend fun saveRiverId(riverId: Int) {
+        filterDataStore.saveRiverId(riverId)
+    }
+
+    suspend fun clearRiverId() {
+        filterDataStore.clearRiverId()
+    }
+
+    fun getSeasonId(): Flow<Int?> = filterDataStore.getSeasonId()
+
+    suspend fun saveSeasonId(seasonId: Int) {
+        filterDataStore.saveSeasonId(seasonId)
+    }
+
+    suspend fun clearSeasonId() {
+        filterDataStore.clearSeasonId()
+    }
+
+    fun getYear(): Flow<Int?> = filterDataStore.getYear()
+
+    suspend fun saveYear(year: Int) {
+        filterDataStore.saveYear(year)
+    }
+
+    suspend fun clearYear() {
+        filterDataStore.clearYear()
     }
 
     fun registerUser(
@@ -142,16 +182,22 @@ class Repository(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun views(): Flow<Resource<ViewsModel>> = flow {
-        emit(Resource.Loading)
+    fun views(): Flow<Resource<ViewsModel>> = channelFlow {
+        send(Resource.Loading)
         try {
-            val response = apiService.views(seasonId = 2, year = 2021)
-            emit(Resource.Success(response))
+            getRiverId().collectLatest { riverId ->
+                getSeasonId().collectLatest { seasonId ->
+                    getYear().collectLatest { year ->
+                        val response = apiService.views(riverId, seasonId, year)
+                        send(Resource.Success(response))
+                    }
+                }
+            }
         } catch (e: Exception) {
             if (e.message.isNullOrBlank()) {
-                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
             } else {
-                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
             }
         }
     }.flowOn(Dispatchers.IO)
@@ -300,9 +346,10 @@ class Repository(
         private var instance: Repository? = null
         fun getInstance(
             apiService: ApiService,
-            authDataStore: AuthDataStore
+            authDataStore: AuthDataStore,
+            filterDataStore: FilterDataStore
         ): Repository = instance ?: synchronized(this) {
-            instance ?: Repository(apiService, authDataStore)
+            instance ?: Repository(apiService, authDataStore, filterDataStore)
         }.also { instance = it }
     }
 }

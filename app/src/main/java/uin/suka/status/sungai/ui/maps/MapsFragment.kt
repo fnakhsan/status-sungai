@@ -130,15 +130,17 @@ class MapsFragment : Fragment() {
         allLatLngList.forEach {
             boundsBuilder.include(it)
         }
-        val bounds: LatLngBounds = boundsBuilder.build()
-        googleMap.animateCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                resources.displayMetrics.widthPixels,
-                resources.displayMetrics.heightPixels,
-                300
+        if (allLatLngList.isNotEmpty()) {
+            val bounds: LatLngBounds = boundsBuilder.build()
+            googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    bounds,
+                    resources.displayMetrics.widthPixels,
+                    resources.displayMetrics.heightPixels,
+                    300
+                )
             )
-        )
+        }
         /*LatLng(-7.7240656222641455, 110.3893486301115),
         LatLng(-7.724786, 110.389623),
         LatLng(-7.72477027191311, 110.38969525698727),

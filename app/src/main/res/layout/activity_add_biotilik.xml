@@ -32,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-
         android:hint="@string/year"
         android:labelFor="@+id/edt_season"
         app:layout_constraintEnd_toEndOf="parent"
