@@ -100,7 +100,7 @@ data class DatasItem(
 	val id: Int,
 
 	@field:SerializedName("status")
-	val status: Int
+	val status: Int?
 )
 
 data class Result(

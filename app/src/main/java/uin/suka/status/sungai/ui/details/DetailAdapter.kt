@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uin.suka.status.sungai.R
+import uin.suka.status.sungai.core.utils.RiverStatusUtil.Companion.getStatusById
 import uin.suka.status.sungai.core.utils.SeasonType.Companion.getSeasonValueById
 import uin.suka.status.sungai.data.network.model.DataItem
 import uin.suka.status.sungai.databinding.ItemRowBiotilikBinding
@@ -21,8 +22,8 @@ class DetailAdapter(private val listData: List<DataItem>) :
         val data = listData[position]
         val seasonId = data.seasonId ?: 0
         holder.apply {
-            tvStatus.text = data.status.toString()
             itemView.context.apply {
+                tvStatus.text = getString(getStatusById(data.status))
                 tvSeasonYear.text = getString(
                     R.string.season_year,
                     getSeasonValueById(seasonId),

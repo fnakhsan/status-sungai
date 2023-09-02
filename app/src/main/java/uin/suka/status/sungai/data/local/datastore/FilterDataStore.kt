@@ -2,6 +2,7 @@ package uin.suka.status.sungai.data.local.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import kotlinx.coroutines.flow.Flow
@@ -62,10 +63,48 @@ class FilterDataStore private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    fun getSortAlphabetically(): Flow<Boolean?> {
+        return dataStore.data.map { preferences ->
+            preferences[SORT_ALPHABETICALLY_KEY]
+        }
+    }
+
+    suspend fun saveSortAlphabetically(isAscending: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[SORT_ALPHABETICALLY_KEY] = isAscending
+        }
+    }
+
+    suspend fun clearSortAlphabetically() {
+        dataStore.edit { preferences ->
+            preferences.remove(SORT_ALPHABETICALLY_KEY)
+        }
+    }
+
+    fun getSortDate(): Flow<Boolean?> {
+        return dataStore.data.map { preferences ->
+            preferences[SORT_DATE_KEY]
+        }
+    }
+
+    suspend fun saveSortDate(isAscending: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[SORT_DATE_KEY] = isAscending
+        }
+    }
+
+    suspend fun clearSortDate() {
+        dataStore.edit { preferences ->
+            preferences.remove(SORT_DATE_KEY)
+        }
+    }
+
     companion object {
         private val RIVER_KEY = intPreferencesKey("river")
         private val SEASON_KEY = intPreferencesKey("season")
         private val YEAR_KEY = intPreferencesKey("year")
+        private val SORT_ALPHABETICALLY_KEY = booleanPreferencesKey("alphabet")
+        private val SORT_DATE_KEY = booleanPreferencesKey("date")
         @Volatile
         private var INSTANCE: FilterDataStore? = null
         fun getInstance(dataStore: DataStore<Preferences>): FilterDataStore {

@@ -19,6 +19,9 @@
         android:name="uin.suka.status.sungai.ui.add.AddFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_addFragment_to_listFilterFragment"
+            app:destination="@id/listFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -33,5 +36,14 @@
         <action
             android:id="@+id/action_mapsFilterFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/listFilterFragment"
+        android:name="uin.suka.status.sungai.ui.filter.ListFilterFragment"
+        android:label="fragment_list_filter"
+        tools:layout="@layout/fragment_list_filter" >
+        <action
+            android:id="@+id/action_listFilterFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </dialog>
 </navigation>

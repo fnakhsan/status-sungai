@@ -5,23 +5,9 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import uin.suka.status.sungai.core.utils.FragmentUtil
 import uin.suka.status.sungai.data.Repository
 
 class MapsViewModel(private val repository: Repository) : ViewModel() {
-//    private val _riverId = MutableLiveData<Int?>()
-//    val riverId: LiveData<Int?> = _riverId
-//    private val _seasonId = MutableLiveData<Int?>()
-//    val seasonId: LiveData<Int?> = _seasonId
-//    private val _year = MutableLiveData<Int?>()
-//    val year: LiveData<Int?> = _year
-    fun segments() = repository.segments()
-
-//    fun views(): LiveData<Resource<ViewsModel>> {
-//        Log.d("filter", "views: ${_riverId.value} , ${_seasonId.value} , ${_year.value}")
-//        return repository.views(_riverId.value, _seasonId.value, _year.value)
-//            .asLiveData(Dispatchers.IO)
-//    }
 
     fun views() = repository.views().asLiveData(Dispatchers.IO)
 
@@ -69,8 +55,4 @@ class MapsViewModel(private val repository: Repository) : ViewModel() {
             repository.clearYear()
         }
     }
-
-    fun getFragmentData() = repository.getFragmentData().asLiveData(Dispatchers.IO)
-
-    fun setFragmentData(fragmentUtil: FragmentUtil) = repository.setFragmentData(fragmentUtil)
 }

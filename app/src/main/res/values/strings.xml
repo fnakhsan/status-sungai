@@ -48,7 +48,7 @@
     <string name="title_add">Add</string>
     <string name="title_profile">Profile</string>
     <string name="retry">Retry</string>
-    <string name="label_location">Share your location</string>
+    <string name="label_location">Use your location</string>
     <string name="lat_value">Lat: %1$s</string>
     <string name="lon_value">Lon: %1$s</string>
     <string name="latitude_value">Latitude: %1$s</string>
@@ -57,7 +57,13 @@
     <string name="full_name">Full Name</string>
     <string name="community">Community</string>
     <string name="community_hint">Community Name (Optional)</string>
-    <string name="snippet">Index Biotilik: %1$s</string>
+    <string name="snippet1">Status Sungai: %1$s</string>
+    <string name="snippet2">Index Biotilik: %1$s</string>
+    <string name="status0">Belum Terdefinisi</string>
+    <string name="status1">Tercemar Berat</string>
+    <string name="status2">Tercemar Sedang</string>
+    <string name="status3">Tercemar Ringan</string>
+    <string name="status4">Tidak Tercemar</string>
     <string name="snack_bar_message">Click open to see details</string>
     <string name="snack_bar_action">Open</string>
 
@@ -84,6 +90,9 @@
     <string name="year">Year</string>
     <string name="guest">GUEST</string>
     <string name="title_filter">Filter</string>
+    <string name="title_sort">Sort</string>
+    <string name="filter_alphabetically">Alphabetically</string>
+    <string name="filter_date">Date Added</string>
     <string-array name="river_array">
         <item>Sungai Gajah Wong</item>
         <item>Sungai Boyong</item>

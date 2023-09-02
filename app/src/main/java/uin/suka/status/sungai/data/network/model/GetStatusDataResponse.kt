@@ -50,7 +50,7 @@ data class DataItem(
 	val id: Int? = null,
 
 	@field:SerializedName("status")
-	val status: Any? = null
+	val status: Int? = null
 )
 
 data class BiotilikResult(

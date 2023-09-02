@@ -4,13 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
@@ -24,6 +31,7 @@ import uin.suka.status.sungai.ui.point.AddPointActivity
 class AddFragment : Fragment() {
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +46,18 @@ class AddFragment : Fragment() {
         binding.rvPoint.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         binding.rvPoint.addItemDecoration(itemDecoration)
+
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.add_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                requireParentFragment().findNavController()
+                    .navigate(R.id.action_addFragment_to_listFilterFragment)
+                return true
+            }
+        }, viewLifecycleOwner)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
         val addViewModel: AddViewModel by viewModels {

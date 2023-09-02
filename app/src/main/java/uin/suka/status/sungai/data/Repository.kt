@@ -1,14 +1,13 @@
 package uin.suka.status.sungai.data
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import uin.suka.status.sungai.R
-import uin.suka.status.sungai.core.utils.FragmentUtil
 import uin.suka.status.sungai.core.utils.SeasonType
 import uin.suka.status.sungai.core.utils.SeasonType.Companion.getIdBySeasonValue
 import uin.suka.status.sungai.core.utils.UiText
@@ -34,12 +33,6 @@ class Repository(
     private val authDataStore: AuthDataStore,
     private val filterDataStore: FilterDataStore
 ) {
-    private var fragmentData = flowOf(FragmentUtil.MAPS).flowOn(Dispatchers.IO)
-    fun getFragmentData(): Flow<FragmentUtil> = fragmentData.flowOn(Dispatchers.IO)
-    fun setFragmentData(fragmentUtil: FragmentUtil) {
-        fragmentData = flowOf(fragmentUtil).flowOn(Dispatchers.IO)
-    }
-
     fun getToken(): Flow<String?> = authDataStore.getToken()
 
     private suspend fun saveToken(token: String) {
@@ -98,6 +91,26 @@ class Repository(
 
     suspend fun clearYear() {
         filterDataStore.clearYear()
+    }
+
+    fun getSortAlphabetically(): Flow<Boolean?> = filterDataStore.getSortAlphabetically()
+
+    suspend fun saveSortAlphabetically(isAscending: Boolean) {
+        filterDataStore.saveSortAlphabetically(isAscending)
+    }
+
+    suspend fun clearSortAlphabetically() {
+        filterDataStore.clearSortAlphabetically()
+    }
+
+    fun getSortDate(): Flow<Boolean?> = filterDataStore.getSortDate()
+
+    suspend fun saveSortDate(isAscending: Boolean) {
+        filterDataStore.saveSortDate(isAscending)
+    }
+
+    suspend fun clearSortDate() {
+        filterDataStore.clearSortDate()
     }
 
     fun registerUser(
@@ -207,9 +220,35 @@ class Repository(
         try {
             getToken().collectLatest { token ->
                 val response = apiService.getAllPoints(generateBearerToken(token.toString()))
-                send(Resource.Success(response.data.points.sortedByDescending {
-                    it.createdAt
-                }))
+                getRiverId().collectLatest { riverId ->
+                    if (riverId != null)
+                        send(Resource.Success(response.data.points.filter {
+                            Log.d("sort", "id $riverId")
+                            it.riverId == riverId
+                        }))
+                }
+//                Log.d("sort", "1 ${response.data.points}")
+//                getSortAlphabetically().collectLatest { isAscending ->
+//                    if (isAscending != null) {
+//                        if (isAscending) response.data.points.sortedBy {
+//                            it.name
+//                        } else response.data.points.sortedByDescending {
+//                            it.name
+//                        }
+//                    } else response.data.points
+//                }
+//                Log.d("sort", "2 ${response.data.points}")
+//                getSortDate().collectLatest { isAscending ->
+//                    if (isAscending != null) {
+//                        if (isAscending) response.data.points.sortedBy {
+//                            it.createdAt
+//                        } else response.data.points.sortedByDescending {
+//                            it.createdAt
+//                        }
+//                    } else response.data.points
+//                }
+//                Log.d("sort", "3 ${response.data.points}")
+//                send(Resource.Success(response.data.points))
             }
         } catch (e: Exception) {
             if (e.message.isNullOrBlank()) {

@@ -3,12 +3,18 @@ package uin.suka.status.sungai.ui.maps
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
 import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
+import uin.suka.status.sungai.core.utils.RiverStatusUtil.Companion.getStatusById
 import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
 import uin.suka.status.sungai.core.utils.UserType
 import uin.suka.status.sungai.data.Resource
@@ -28,6 +35,7 @@ import uin.suka.status.sungai.data.network.model.RiversItem
 import uin.suka.status.sungai.data.network.model.ViewPointsItem
 import uin.suka.status.sungai.databinding.FragmentMapsBinding
 import uin.suka.status.sungai.ui.details.DetailsActivity
+
 
 class MapsFragment : Fragment() {
 
@@ -96,6 +104,17 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.maps_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                requireParentFragment().findNavController()
+                    .navigate(R.id.action_mapsFragment_to_mapsFilterFragment)
+                return true
+            }
+        }, viewLifecycleOwner)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
@@ -105,7 +124,11 @@ class MapsFragment : Fragment() {
         _binding = null
     }
 
-    private fun showRiver(googleMap: GoogleMap, listRiver: List<RiversItem>, mapsViewModel: MapsViewModel) {
+    private fun showRiver(
+        googleMap: GoogleMap,
+        listRiver: List<RiversItem>,
+        mapsViewModel: MapsViewModel
+    ) {
         val allLatLngList = mutableListOf<LatLng>()
         listRiver.forEach { river ->
             val latLngList = mutableListOf<LatLng>()
@@ -147,7 +170,11 @@ class MapsFragment : Fragment() {
         LatLng(-7.72566605315169, 110.38981780776163)*/
     }
 
-    private fun addMarkers(googleMap: GoogleMap, listPoint: List<ViewPointsItem>, mapsViewModel: MapsViewModel) {
+    private fun addMarkers(
+        googleMap: GoogleMap,
+        listPoint: List<ViewPointsItem>,
+        mapsViewModel: MapsViewModel
+    ) {
         listPoint.forEach { point ->
             point.datas.lastOrNull {
                 googleMap.addMarker(
@@ -157,7 +184,12 @@ class MapsFragment : Fragment() {
                             point.longitude.toDouble()
                         )
                     ).title(point.name)
-                        .snippet(getString(R.string.snippet, it.result.indeksBiotilik))
+                        .snippet(
+                            getString(
+                                R.string.snippet1,
+                                getString(getStatusById(it.status))
+                            )
+                        )
                 )
                 true
             }
@@ -170,7 +202,7 @@ class MapsFragment : Fragment() {
 
     private fun showSnackBar(mapsViewModel: MapsViewModel, pointId: Int) {
         mapsViewModel.getRole().observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 UserType.GUEST.type -> {}
                 else -> {
                     Snackbar.make(

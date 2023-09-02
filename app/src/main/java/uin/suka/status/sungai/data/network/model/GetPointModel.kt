@@ -63,5 +63,8 @@ data class PointsItem(
     val segmentId: Int,
 
     @field:SerializedName("longitude")
-    val longitude: String
+    val longitude: String,
+
+    @field:SerializedName("river_id")
+    val riverId: Int
 ) : Parcelable

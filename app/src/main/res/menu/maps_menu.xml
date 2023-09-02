@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/maps_filter"
-        android:icon="@drawable/ic_filter_24"
-        app:showAsAction="always"
-        android:title="@string/title_filter" />
+        android:icon="@drawable/ic_filter_alt_24"
+        android:title="@string/title_filter"
+        app:showAsAction="always" />
 </menu>
