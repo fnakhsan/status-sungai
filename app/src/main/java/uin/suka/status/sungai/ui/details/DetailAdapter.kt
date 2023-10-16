@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uin.suka.status.sungai.R
-import uin.suka.status.sungai.core.utils.RiverStatusUtil.Companion.getStatusById
-import uin.suka.status.sungai.core.utils.SeasonType.Companion.getSeasonValueById
+import uin.suka.status.sungai.utils.RiverStatusUtil.Companion.getStatusById
+import uin.suka.status.sungai.utils.SeasonType.Companion.getSeasonValueById
 import uin.suka.status.sungai.data.network.model.DataItem
 import uin.suka.status.sungai.databinding.ItemRowBiotilikBinding
 

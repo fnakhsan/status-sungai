@@ -12,10 +12,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT
-import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
-import uin.suka.status.sungai.core.utils.parcelable
-import uin.suka.status.sungai.data.Resource
+import uin.suka.status.sungai.utils.Const.EXTRA_POINT
+import uin.suka.status.sungai.utils.Const.EXTRA_POINT_ID
+import uin.suka.status.sungai.utils.parcelable
+import com.example.core.data.Resource
 import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.databinding.ActivityDetailsBinding
 import uin.suka.status.sungai.ui.biotilik.AddBiotilikActivity

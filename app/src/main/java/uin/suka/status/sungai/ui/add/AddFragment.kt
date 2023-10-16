@@ -19,10 +19,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT
-import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
-import uin.suka.status.sungai.core.utils.UiText.Companion.asString
-import uin.suka.status.sungai.data.Resource
+import uin.suka.status.sungai.utils.Const.EXTRA_POINT
+import uin.suka.status.sungai.utils.ThreadUtil.runOnUiThread
+import com.example.core.utils.UiText.Companion.asString
+import com.example.core.data.Resource
 import uin.suka.status.sungai.data.network.model.PointsItem
 import uin.suka.status.sungai.databinding.FragmentAddBinding
 import uin.suka.status.sungai.ui.details.DetailsActivity

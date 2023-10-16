@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "com.example.core";
+option java_multiple_files = true;
+
+message FilterPreferences {
+  int32 riverId = 1;
+  int32 seasonId = 2;
+  int32 yearId = 3;
+
+  // user selected tasks sorting order
+  SortOrder sort_order = 4;
+
+  // defines tasks sorting order: no order, by deadline, by priority, by deadline and priority
+  enum SortOrder {
+    UNSPECIFIED = 0;
+    BY_ALPHABETICALLY = 1;
+    BY_DATE = 2;
+  }
+}

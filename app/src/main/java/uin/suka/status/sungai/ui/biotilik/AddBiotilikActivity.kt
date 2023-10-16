@@ -9,11 +9,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
-import uin.suka.status.sungai.core.utils.SeasonType.Companion.getSeasonTypeById
-import uin.suka.status.sungai.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
-import uin.suka.status.sungai.core.utils.UiText
-import uin.suka.status.sungai.data.Resource
+import uin.suka.status.sungai.utils.Const.EXTRA_POINT_ID
+import uin.suka.status.sungai.utils.SeasonType.Companion.getSeasonTypeById
+import uin.suka.status.sungai.utils.TextIsNotBlankUtil.textIsNotBlankListener
+import com.example.core.utils.UiText
+import com.example.core.data.Resource
 import uin.suka.status.sungai.data.network.model.BiotilikResult
 import uin.suka.status.sungai.databinding.ActivityAddBiotilikBinding
 import uin.suka.status.sungai.ui.components.errorToast

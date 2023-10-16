@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.data.Resource
+import com.example.core.data.Resource
 import uin.suka.status.sungai.databinding.ActivityLoginBinding
 import uin.suka.status.sungai.ui.home.HomeActivity
 import uin.suka.status.sungai.ui.register.RegisterActivity

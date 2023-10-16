@@ -3,7 +3,7 @@ package uin.suka.status.sungai.ui.biotilik
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.Dispatchers
-import uin.suka.status.sungai.core.utils.SeasonType
+import uin.suka.status.sungai.utils.SeasonType
 import uin.suka.status.sungai.data.Repository
 import uin.suka.status.sungai.data.network.model.BiotilikResult
 

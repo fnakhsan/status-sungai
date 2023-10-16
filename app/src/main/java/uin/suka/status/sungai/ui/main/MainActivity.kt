@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.EXTRA_TOKEN
+import uin.suka.status.sungai.utils.Const.EXTRA_TOKEN
 import uin.suka.status.sungai.databinding.ActivityMainBinding
 import uin.suka.status.sungai.ui.home.HomeActivity
 import uin.suka.status.sungai.ui.login.LoginActivity

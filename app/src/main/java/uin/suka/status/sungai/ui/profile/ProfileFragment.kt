@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.UiText.Companion.asString
-import uin.suka.status.sungai.core.utils.UserType
-import uin.suka.status.sungai.data.Resource
+import com.example.core.utils.UiText.Companion.asString
+import uin.suka.status.sungai.utils.UserType
+import com.example.core.data.Resource
 import uin.suka.status.sungai.data.network.model.User
 import uin.suka.status.sungai.databinding.FragmentProfileBinding
 import uin.suka.status.sungai.ui.components.errorToast

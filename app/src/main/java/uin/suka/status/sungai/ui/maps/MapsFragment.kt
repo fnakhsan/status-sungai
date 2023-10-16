@@ -26,11 +26,11 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.snackbar.Snackbar
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
-import uin.suka.status.sungai.core.utils.RiverStatusUtil.Companion.getStatusById
-import uin.suka.status.sungai.core.utils.ThreadUtil.runOnUiThread
-import uin.suka.status.sungai.core.utils.UserType
-import uin.suka.status.sungai.data.Resource
+import uin.suka.status.sungai.utils.Const.EXTRA_POINT_ID
+import uin.suka.status.sungai.utils.RiverStatusUtil.Companion.getStatusById
+import uin.suka.status.sungai.utils.ThreadUtil.runOnUiThread
+import uin.suka.status.sungai.utils.UserType
+import com.example.core.data.Resource
 import uin.suka.status.sungai.data.network.model.RiversItem
 import uin.suka.status.sungai.data.network.model.ViewPointsItem
 import uin.suka.status.sungai.databinding.FragmentMapsBinding

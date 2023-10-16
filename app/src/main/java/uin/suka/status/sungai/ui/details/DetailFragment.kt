@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.Const.EXTRA_POINT_ID
-import uin.suka.status.sungai.data.Resource
+import uin.suka.status.sungai.utils.Const.EXTRA_POINT_ID
+import com.example.core.data.Resource
 import uin.suka.status.sungai.data.network.model.DataItem
 import uin.suka.status.sungai.databinding.FragmentDetailBinding
 import uin.suka.status.sungai.ui.components.errorToast

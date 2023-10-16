@@ -18,9 +18,9 @@ import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
 import uin.suka.status.sungai.R
 import uin.suka.status.sungai.core.factory.ViewModelFactory
-import uin.suka.status.sungai.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
-import uin.suka.status.sungai.core.utils.UiText.Companion.asString
-import uin.suka.status.sungai.data.Resource
+import uin.suka.status.sungai.utils.TextIsNotBlankUtil.textIsNotBlankListener
+import com.example.core.utils.UiText.Companion.asString
+import com.example.core.data.Resource
 import uin.suka.status.sungai.databinding.ActivityAddPointBinding
 
 class AddPointActivity : AppCompatActivity() {
