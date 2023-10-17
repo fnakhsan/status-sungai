@@ -8,12 +8,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import uin.suka.status.sungai.R
-import uin.suka.status.sungai.core.factory.ViewModelFactory
 import com.example.core.data.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import uin.suka.status.sungai.databinding.ActivityLoginBinding
 import uin.suka.status.sungai.ui.home.HomeActivity
 import uin.suka.status.sungai.ui.register.RegisterActivity
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +22,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this@LoginActivity)
-        val loginViewModel: LoginViewModel by viewModels {
-            factory
-        }
+        val loginViewModel: LoginViewModel by viewModels()
         binding.apply {
             btnLogin.setOnClickListener {
                 if (edLoginUsername.error.isNullOrEmpty() && edLoginPassword.error.isNullOrEmpty()) {

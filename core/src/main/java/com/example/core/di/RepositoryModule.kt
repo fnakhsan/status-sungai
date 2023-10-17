@@ -1,16 +1,16 @@
 package com.example.core.di
 
 import com.example.core.data.Repository
-import com.example.core.domain.IAnimeRepository
+import com.example.core.domain.ICoreRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-@Module(includes = [NetworkModule::class, DatabaseModule::class])
+@Module(includes = [NetworkModule::class, DatabaseModule::class, DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun provideRepository(animeRepository: Repository): IAnimeRepository
+    abstract fun provideRepository(repository: Repository): ICoreRepository
 }

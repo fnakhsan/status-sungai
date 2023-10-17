@@ -1,6 +1,8 @@
 package com.example.core.data
 
 import android.util.Log
+import com.example.core.data.local.LocalDataSource
+import com.example.core.data.remote.RemoteDataSource
 import com.example.core.utils.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -8,87 +10,93 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Repository {
-    fun getToken(): Flow<String?> = authDataStore.getToken()
-
-    private suspend fun saveToken(token: String) {
-        authDataStore.saveToken(token)
-    }
-
-    private suspend fun clearToken() {
-        authDataStore.clearToken()
-    }
-
-    fun getRole(): Flow<String?> = authDataStore.getRole()
-
-    suspend fun saveRole(role: String) {
-        authDataStore.saveRole(role)
-    }
-
-    private suspend fun clearRole() {
-        authDataStore.clearRole()
-    }
-
-    fun getUserId(): Flow<Int?> = authDataStore.getUserId()
-
-    private suspend fun saveUserId(userId: Int) {
-        authDataStore.saveUserId(userId)
-    }
-
-    private suspend fun clearUserId() {
-        authDataStore.clearUserId()
-    }
-
-    fun getRiverId(): Flow<Int?> = filterDataStore.getRiverId()
-
-    suspend fun saveRiverId(riverId: Int) {
-        filterDataStore.saveRiverId(riverId)
-    }
-
-    suspend fun clearRiverId() {
-        filterDataStore.clearRiverId()
-    }
-
-    fun getSeasonId(): Flow<Int?> = filterDataStore.getSeasonId()
-
-    suspend fun saveSeasonId(seasonId: Int) {
-        filterDataStore.saveSeasonId(seasonId)
-    }
-
-    suspend fun clearSeasonId() {
-        filterDataStore.clearSeasonId()
-    }
-
-    fun getYear(): Flow<Int?> = filterDataStore.getYear()
-
-    suspend fun saveYear(year: Int) {
-        filterDataStore.saveYear(year)
-    }
-
-    suspend fun clearYear() {
-        filterDataStore.clearYear()
-    }
-
-    fun getSortAlphabetically(): Flow<Boolean?> = filterDataStore.getSortAlphabetically()
-
-    suspend fun saveSortAlphabetically(isAscending: Boolean) {
-        filterDataStore.saveSortAlphabetically(isAscending)
-    }
-
-    suspend fun clearSortAlphabetically() {
-        filterDataStore.clearSortAlphabetically()
-    }
-
-    fun getSortDate(): Flow<Boolean?> = filterDataStore.getSortDate()
-
-    suspend fun saveSortDate(isAscending: Boolean) {
-        filterDataStore.saveSortDate(isAscending)
-    }
-
-    suspend fun clearSortDate() {
-        filterDataStore.clearSortDate()
-    }
+@Singleton
+class Repository @Inject constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) {
+//    fun getToken(): Flow<String?> = authDataStore.getToken()
+//
+//    private suspend fun saveToken(token: String) {
+//        authDataStore.saveToken(token)
+//    }
+//
+//    private suspend fun clearToken() {
+//        authDataStore.clearToken()
+//    }
+//
+//    fun getRole(): Flow<String?> = authDataStore.getRole()
+//
+//    suspend fun saveRole(role: String) {
+//        authDataStore.saveRole(role)
+//    }
+//
+//    private suspend fun clearRole() {
+//        authDataStore.clearRole()
+//    }
+//
+//    fun getUserId(): Flow<Int?> = authDataStore.getUserId()
+//
+//    private suspend fun saveUserId(userId: Int) {
+//        authDataStore.saveUserId(userId)
+//    }
+//
+//    private suspend fun clearUserId() {
+//        authDataStore.clearUserId()
+//    }
+//
+//    fun getRiverId(): Flow<Int?> = filterDataStore.getRiverId()
+//
+//    suspend fun saveRiverId(riverId: Int) {
+//        filterDataStore.saveRiverId(riverId)
+//    }
+//
+//    suspend fun clearRiverId() {
+//        filterDataStore.clearRiverId()
+//    }
+//
+//    fun getSeasonId(): Flow<Int?> = filterDataStore.getSeasonId()
+//
+//    suspend fun saveSeasonId(seasonId: Int) {
+//        filterDataStore.saveSeasonId(seasonId)
+//    }
+//
+//    suspend fun clearSeasonId() {
+//        filterDataStore.clearSeasonId()
+//    }
+//
+//    fun getYear(): Flow<Int?> = filterDataStore.getYear()
+//
+//    suspend fun saveYear(year: Int) {
+//        filterDataStore.saveYear(year)
+//    }
+//
+//    suspend fun clearYear() {
+//        filterDataStore.clearYear()
+//    }
+//
+//    fun getSortAlphabetically(): Flow<Boolean?> = filterDataStore.getSortAlphabetically()
+//
+//    suspend fun saveSortAlphabetically(isAscending: Boolean) {
+//        filterDataStore.saveSortAlphabetically(isAscending)
+//    }
+//
+//    suspend fun clearSortAlphabetically() {
+//        filterDataStore.clearSortAlphabetically()
+//    }
+//
+//    fun getSortDate(): Flow<Boolean?> = filterDataStore.getSortDate()
+//
+//    suspend fun saveSortDate(isAscending: Boolean) {
+//        filterDataStore.saveSortDate(isAscending)
+//    }
+//
+//    suspend fun clearSortDate() {
+//        filterDataStore.clearSortDate()
+//    }
 
     fun registerUser(
         username: String,

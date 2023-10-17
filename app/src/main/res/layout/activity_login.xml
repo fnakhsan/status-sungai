@@ -37,48 +37,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_login" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_username"
-            style="@style/TextAppearance.Material3.LabelLarge"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_username"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="16dp"
-            android:labelFor="@+id/ed_login_username"
-            android:text="@string/username"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_login" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_login"
+            app:startIconDrawable="@drawable/ic_person_default"
+            app:startIconTint="@color/seed">
 
-        <uin.suka.status.sungai.ui.components.EmailEditText
-            android:id="@+id/ed_login_username"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="12dp"
-            android:hint="@string/username"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_login_username"
+                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_password"
-            style="@style/TextAppearance.Material3.LabelLarge"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="12dp"
-            android:labelFor="@+id/ed_login_password"
-            android:text="@string/password"
+            app:endIconDrawable="@drawable/ic_visibility_24"
+            app:endIconTint="@color/seed"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_login_username" />
+            app:layout_constraintTop_toBottomOf="@id/til_username"
+            app:startIconDrawable="@drawable/ic_lock_24"
+            app:startIconTint="@color/seed">
 
-        <uin.suka.status.sungai.ui.components.PasswordEditText
-            android:id="@+id/ed_login_password"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="12dp"
-            android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_password" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_login_password"
+                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
@@ -90,7 +93,7 @@
             android:text="@string/login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_login_password" />
+            app:layout_constraintTop_toBottomOf="@id/til_password" />
 
         <LinearLayout
             android:layout_width="wrap_content"
