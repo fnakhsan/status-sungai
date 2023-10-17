@@ -2,7 +2,7 @@ package com.example.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginModel(
+data class LoginBody(
     @field:SerializedName("username")
     val username: String? = null,
 

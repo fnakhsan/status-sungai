@@ -2,8 +2,19 @@ package com.example.core.domain
 
 import android.util.Log
 import com.example.core.data.Resource
+import com.example.core.data.remote.response.AddBiotilikModel
+import com.example.core.data.remote.response.DataItem
+import com.example.core.data.remote.response.LoginResponse
+import com.example.core.data.remote.response.PointsItem
+import com.example.core.data.remote.response.RegisterResponse
+import com.example.core.data.remote.response.SegmentsItem
+import com.example.core.domain.model.AddPointModel
+import com.example.core.domain.model.LoginModel
 import com.example.core.domain.model.PointModel
+import com.example.core.domain.model.RegisterModel
 import com.example.core.domain.model.SegmentModel
+import com.example.core.domain.model.StatusModel
+import com.example.core.domain.model.UserModel
 import com.example.core.utils.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -12,39 +23,23 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 interface CoreUseCase {
-    fun getSegments(): Flow<Resource<List<SegmentModel>>>
+    fun registerUser(registerModel: RegisterModel): Flow<Resource<UiText>>
 
-    fun getPoints(): Flow<Resource<List<PointModel>>>
-
-    fun registerUser(
-        username: String,
-        password: String,
-        name: String,
-        community: String?
-    ): Flow<Resource<RegisterResponse>>
-
-    fun loginUser(username: String, password: String): Flow<Resource<LoginResponse>>
+    fun loginUser(loginModel: LoginModel): Flow<Resource<UiText>>
 
     fun logoutUser(): Flow<Resource<UiText>>
 
-    fun segments(): Flow<Resource<List<SegmentsItem>>>
+    fun getUserById(userId: String): Flow<Resource<UserModel>>
 
-    fun views(): Flow<Resource<ViewsModel>>
+    fun getSegments(): Flow<Resource<SegmentModel>>
 
-    fun getAllPoints(): Flow<Resource<List<PointsItem>>>
+    fun getPoints(): Flow<Resource<List<PointModel>>>
 
-    fun getPointById(pointId: String): Flow<Resource<PointsItem>>
+    fun getPointById(pointId: String): Flow<Resource<PointModel>>
 
-    fun getStatusByPointId(pointId: String): Flow<Resource<List<DataItem>>>
+    fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>>
 
-    fun addPoint(name: String, latitude: Double, longitude: Double)
+    fun addPoint(addPointModel: AddPointModel): Flow<Resource<UiText>>
 
-    fun addBiotilik(
-        pointId: String,
-        biotilikResult: BiotilikResult,
-        seasonType: SeasonType,
-        year: Int
-    )
-
-    fun getUserById(userId: String): Flow<Resource<GetUserResponse>>
+    fun addBiotilik(addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>>
 }
