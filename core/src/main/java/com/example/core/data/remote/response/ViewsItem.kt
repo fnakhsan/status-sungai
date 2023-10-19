@@ -2,7 +2,7 @@ package com.example.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ViewsModel(
+data class ViewsResponse(
 
 	@field:SerializedName("data")
 	val data: ViewsData,

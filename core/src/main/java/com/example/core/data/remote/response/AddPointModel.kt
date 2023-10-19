@@ -2,7 +2,7 @@ package com.example.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class AddPointModel(
+data class AddPointBody(
 
 	@field:SerializedName("name")
 	val name: String,

@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">core</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="register_success">Akun berhasil dibuat</string>
+    <string name="logout_success">👋</string>
+    <string name="add_point_success">Point </string>
+
+
+    <!--    River Status-->
+    <string name="status0">Belum Terdefinisi</string>
+    <string name="status1">Tercemar Berat</string>
+    <string name="status2">Tercemar Sedang</string>
+    <string name="status3">Tercemar Ringan</string>
+    <string name="status4">Tidak Tercemar</string>
 </resources>

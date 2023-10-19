@@ -31,12 +31,12 @@ class CoreInteractor @Inject constructor(private val coreRepository: ICoreReposi
         return coreRepository.getUserById(userId)
     }
 
-    override fun getSegments(): Flow<Resource<SegmentModel>> {
+    override fun getSegments(): Flow<Resource<List<SegmentModel>>> {
         return coreRepository.getSegments()
     }
 
-    override fun getPoints(): Flow<Resource<List<PointModel>>> {
-        return coreRepository.getPoints()
+    override fun getPoints(token: String): Flow<Resource<List<PointModel>>> {
+        return coreRepository.getPoints(token)
     }
 
     override fun getPointById(pointId: String): Flow<Resource<PointModel>> {
@@ -47,11 +47,11 @@ class CoreInteractor @Inject constructor(private val coreRepository: ICoreReposi
         return coreRepository.getStatusByPointId(pointId)
     }
 
-    override fun addPoint(addPointModel: AddPointModel): Flow<Resource<UiText>> {
-        return coreRepository.addPoint(addPointModel)
+    override fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>> {
+        return coreRepository.addPoint(token, addPointModel)
     }
 
-    override fun addBiotilik(addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>> {
-        return coreRepository.addBiotilik(addBiotilikModel)
+    override fun addBiotilik(token: String, addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>> {
+        return coreRepository.addBiotilik(token, addBiotilikModel)
     }
 }

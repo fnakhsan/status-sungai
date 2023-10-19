@@ -2,16 +2,16 @@ package com.example.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class GetUserResponse(
+data class UserResponse(
 
 	@field:SerializedName("data")
-	val data: User,
+	val data: UserItem,
 
 	@field:SerializedName("status")
 	val status: String
 )
 
-data class User(
+data class UserItem(
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,

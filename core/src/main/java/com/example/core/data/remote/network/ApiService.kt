@@ -2,18 +2,17 @@ package com.example.core.data.remote.network
 
 import com.example.core.data.remote.response.AddBiotilikModel
 import com.example.core.data.remote.response.AddBiotilikResponse
-import com.example.core.data.remote.response.AddPointModel
+import com.example.core.data.remote.response.AddPointBody
 import com.example.core.data.remote.response.AddPointResponse
 import com.example.core.data.remote.response.GetPointByIdResponse
 import com.example.core.data.remote.response.GetPointModel
 import com.example.core.data.remote.response.GetStatusDataResponse
-import com.example.core.data.remote.response.GetUserResponse
-import com.example.core.data.remote.response.LoginModel
+import com.example.core.data.remote.response.LoginBody
 import com.example.core.data.remote.response.LoginResponse
-import com.example.core.data.remote.response.RegisterModel
+import com.example.core.data.remote.response.RegisterBody
 import com.example.core.data.remote.response.RegisterResponse
 import com.example.core.data.remote.response.SegmentsModel
-import com.example.core.data.remote.response.ViewsModel
+import com.example.core.data.remote.response.ViewsResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -24,12 +23,12 @@ import retrofit2.http.Query
 interface ApiService {
     @POST("register")
     suspend fun register(
-        @Body register: RegisterModel
+        @Body register: RegisterBody
     ): RegisterResponse
 
     @POST("login")
     suspend fun login(
-        @Body login: LoginModel
+        @Body login: LoginBody
     ): LoginResponse
 
     @GET("segments/1")
@@ -41,7 +40,7 @@ interface ApiService {
         @Query("seasonId") seasonId: Int? = null,
         @Query("year") year: Int? = null,
         @Query("method") method: String? = null
-    ): ViewsModel
+    ): ViewsResponse
 
     @GET("points")
     suspend fun getAllPoints(
@@ -64,7 +63,7 @@ interface ApiService {
     suspend fun addPoints(
         @Header("Authorization") token: String,
         @Path("segmentId") segmentId: String,
-        @Body pointModel: AddPointModel
+        @Body pointModel: AddPointBody
     ): AddPointResponse
 
     @POST("datas/{pointId}")

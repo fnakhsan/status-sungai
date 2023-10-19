@@ -21,15 +21,15 @@ interface ICoreRepository {
 
     fun getUserById(userId: String): Flow<Resource<UserModel>>
 
-    fun getSegments(): Flow<Resource<SegmentModel>>
+    fun getSegments(): Flow<Resource<List<SegmentModel>>>
 
-    fun getPoints(): Flow<Resource<List<PointModel>>>
+    fun getPoints(token: String): Flow<Resource<List<PointModel>>>
 
     fun getPointById(pointId: String): Flow<Resource<PointModel>>
 
     fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>>
 
-    fun addPoint(addPointModel: AddPointModel): Flow<Resource<UiText>>
+    fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>>
 
-    fun addBiotilik(addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>>
+    fun addBiotilik(token: String, addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>>
 }

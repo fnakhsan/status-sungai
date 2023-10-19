@@ -1,8 +1,7 @@
 package com.example.core.domain.model
 
-data class ViewPointModel(
+data class FlowPointModel(
     val id: Int,
     val latitude: String,
     val longitude: String,
-    val status: Int,
 )

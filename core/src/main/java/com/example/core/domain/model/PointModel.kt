@@ -6,6 +6,6 @@ data class PointModel(
     val riverId: Int,
     val segmentId: Int,
     val createdBy: String,
-    val latitude: Int,
-    val longitude: Int,
+    val latitude: String,
+    val longitude: String,
 )

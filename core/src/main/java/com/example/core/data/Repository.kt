@@ -1,10 +1,20 @@
 package com.example.core.data
 
 import android.util.Log
+import com.example.core.R
 import com.example.core.data.remote.RemoteDataSource
+import com.example.core.data.remote.response.AddBiotilikModel
+import com.example.core.data.remote.response.RegisterResponse
+import com.example.core.domain.ICoreRepository
+import com.example.core.domain.model.AddPointModel
+import com.example.core.domain.model.LoginModel
+import com.example.core.domain.model.PointModel
+import com.example.core.domain.model.RegisterModel
+import com.example.core.domain.model.SegmentModel
 import com.example.core.utils.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
@@ -15,88 +25,84 @@ import javax.inject.Singleton
 @Singleton
 class Repository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
-) {
-    fun registerUser(
-        username: String,
-        password: String,
-        name: String,
-        community: String?
-    ): Flow<Resource<RegisterResponse>> =
+) : ICoreRepository {
+    override fun registerUser(registerModel: RegisterModel): Flow<Resource<UiText>> = flow {
+        remoteDataSource.registerUser(registerModel).collectLatest {
+            when (it) {
+                Resource.Loading -> emit(Resource.Loading)
+                is Resource.Success -> emit(Resource.Success(UiText.StringResource(R.string.register_success)))
+                is Resource.Error -> emit(Resource.Error(it.error))
+            }
+        }
+    }
+
+    override fun loginUser(loginModel: LoginModel): Flow<Resource<UiText>> = flow {
+        remoteDataSource.loginUser(loginModel).collectLatest {
+            when (it) {
+                Resource.Loading -> emit(Resource.Loading)
+                is Resource.Success -> {
+//                    it.data.accessToken.let { saveToken(it) }
+//                    it.data.type.let { saveRole(it) }
+//                    it.data.id.let { saveUserId(it) }
+                    emit(Resource.Success(UiText.StringResource(R.string.register_success)))
+                }
+
+                is Resource.Error -> emit(Resource.Error(it.error))
+            }
+        }
+    }
+
+    override fun logoutUser(): Flow<Resource<UiText>> = flow {
+        emit(Resource.Loading)
+//        clearToken()
+//        clearRole()
+//        clearUserId()
+        emit(Resource.Success(UiText.StringResource(R.string.logout_success)))
+    }.catch {
+        if (it.message.isNullOrBlank()) {
+            emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+        } else {
+            emit(Resource.Error(UiText.DynamicString(it.message.toString())))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override fun getSegments(): Flow<Resource<List<SegmentModel>>> = flow {
+        remoteDataSource.getSegments().collectLatest {
+            when (it) {
+                Resource.Loading -> emit(Resource.Loading)
+                is Resource.Success -> emit(Resource.Success(it.data))
+                is Resource.Error -> emit(Resource.Error(it.error))
+            }
+        }
+    }
+
+    override fun getPoints(token: String): Flow<Resource<List<PointModel>>> = flow {
+        remoteDataSource.getPoints(token).collectLatest {
+            when (it) {
+                Resource.Loading -> emit(Resource.Loading)
+                is Resource.Success -> emit(Resource.Success(it.data))
+                is Resource.Error -> emit(Resource.Error(it.error))
+            }
+        }
+    }
+
+    override fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>> =
         flow {
-            emit(Resource.Loading)
-            try {
-                val response = apiService.register(
-                    RegisterModel(
-                        username = username,
-                        password = password,
-                        name = name,
-                        community = community,
-                        type = "relawan",
-                        active = "active",
-                        riverId = 2,
-                    )
-                )
-                emit(Resource.Success(response))
-            } catch (e: Exception) {
-                if (e.message.isNullOrBlank()) {
-                    emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
-                } else {
-                    emit(Resource.Error(UiText.DynamicString(e.message.toString())))
+            remoteDataSource.addPoints(token, addPointModel).collectLatest {
+                when (it) {
+                    Resource.Loading -> emit(Resource.Loading)
+                    is Resource.Success -> emit(Resource.Success(UiText.StringResource(R.string.register_success)))
+                    is Resource.Error -> emit(Resource.Error(it.error))
                 }
             }
-        }.flowOn(Dispatchers.IO)
-
-    fun loginUser(username: String, password: String): Flow<Resource<LoginResponse>> = flow {
-        emit(Resource.Loading)
-        try {
-            val response = apiService.login(
-                LoginModel(
-                    username = username,
-                    password = password
-                )
-            )
-            response.data.accessToken.let { saveToken(it) }
-            response.data.type.let { saveRole(it) }
-            response.data.id.let { saveUserId(it) }
-            emit(Resource.Success(response))
-        } catch (e: Exception) {
-            if (e.message.isNullOrBlank()) {
-                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
-            } else {
-                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
-            }
         }
-    }.flowOn(Dispatchers.IO)
 
-    fun logoutUser(): Flow<Resource<UiText>> = flow {
-        emit(Resource.Loading)
-        try {
-            clearToken()
-            clearRole()
-            clearUserId()
-            emit(Resource.Success(UiText.StringResource(R.string.logout)))
-        } catch (e: Exception) {
-            if (e.message.isNullOrBlank()) {
-                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
-            } else {
-                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
-            }
-        }
-    }.flowOn(Dispatchers.IO)
+    override fun addBiotilik(
+        token: String,
+        addBiotilikModel: AddBiotilikModel
+    ): Flow<Resource<UiText>> = flow {
 
-    fun segments(): Flow<Resource<List<SegmentsItem>>> = flow {
-        emit(Resource.Loading)
-        try {
-            val response = apiService.segments()
-            emit(Resource.Success(response.data.segments))
-        } catch (e: Exception) {
-            if (e.message.isNullOrBlank()) {
-                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
-            } else {
-                emit(Resource.Error(UiText.DynamicString(e.message.toString())))
-            }
-        }
-    }.flowOn(Dispatchers.IO)
+    }
 
     fun views(): Flow<Resource<ViewsModel>> = channelFlow {
         send(Resource.Loading)
@@ -255,7 +261,7 @@ class Repository @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    fun getUserById(userId: String): Flow<Resource<GetUserResponse>> = channelFlow {
+    override fun getUserById(userId: String): Flow<Resource<GetUserResponse>> = channelFlow {
         send(Resource.Loading)
         try {
             getToken().collectLatest { token ->
@@ -274,14 +280,6 @@ class Repository @Inject constructor(
             }
         }
     }.flowOn(Dispatchers.IO)
-
-    private fun generateBearerToken(token: String): String {
-        return if (token.contains("bearer", true)) {
-            token
-        } else {
-            "Bearer $token"
-        }
-    }
 
     companion object {
         @Volatile
