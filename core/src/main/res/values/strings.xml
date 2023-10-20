@@ -3,7 +3,8 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="register_success">Akun berhasil dibuat</string>
     <string name="logout_success">👋</string>
-    <string name="add_point_success">Point </string>
+    <string name="add_point_success">Point berhasil ditambahkan</string>
+    <string name="add_biotilik_success">Biotilik berhasil ditambahkan </string>
 
 
     <!--    River Status-->

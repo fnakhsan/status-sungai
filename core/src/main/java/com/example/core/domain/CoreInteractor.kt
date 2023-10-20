@@ -1,7 +1,7 @@
 package com.example.core.domain
 
 import com.example.core.data.Resource
-import com.example.core.data.remote.response.AddBiotilikModel
+import com.example.core.domain.model.AddBiotilikModel
 import com.example.core.domain.model.AddPointModel
 import com.example.core.domain.model.LoginModel
 import com.example.core.domain.model.PointModel
@@ -39,8 +39,8 @@ class CoreInteractor @Inject constructor(private val coreRepository: ICoreReposi
         return coreRepository.getPoints(token)
     }
 
-    override fun getPointById(pointId: String): Flow<Resource<PointModel>> {
-        return coreRepository.getPointById(pointId)
+    override fun getPointById(token: String, pointId: String): Flow<Resource<PointModel>> {
+        return coreRepository.getPointById(token, pointId)
     }
 
     override fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>> {
@@ -51,7 +51,7 @@ class CoreInteractor @Inject constructor(private val coreRepository: ICoreReposi
         return coreRepository.addPoint(token, addPointModel)
     }
 
-    override fun addBiotilik(token: String, addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>> {
-        return coreRepository.addBiotilik(token, addBiotilikModel)
+    override fun addBiotilik(token: String, pointId: String, addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>> {
+        return coreRepository.addBiotilik(token, pointId, addBiotilikModel)
     }
 }

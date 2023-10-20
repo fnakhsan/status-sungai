@@ -2,7 +2,7 @@ package com.example.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class AddBiotilikModel(
+data class AddBiotilikBody(
 
 	@field:SerializedName("method")
 	val method: String,

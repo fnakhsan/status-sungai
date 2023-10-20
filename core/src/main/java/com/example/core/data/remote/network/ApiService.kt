@@ -1,6 +1,6 @@
 package com.example.core.data.remote.network
 
-import com.example.core.data.remote.response.AddBiotilikModel
+import com.example.core.data.remote.response.AddBiotilikBody
 import com.example.core.data.remote.response.AddBiotilikResponse
 import com.example.core.data.remote.response.AddPointBody
 import com.example.core.data.remote.response.AddPointResponse
@@ -70,7 +70,7 @@ interface ApiService {
     suspend fun addBiotilik(
         @Header("Authorization") token: String,
         @Path("pointId") pointId: String,
-        @Body addBiotilikModel: AddBiotilikModel
+        @Body addBiotilikBody: AddBiotilikBody
     ): AddBiotilikResponse
 
     @GET("users/{userId}")

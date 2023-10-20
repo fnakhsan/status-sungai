@@ -1,12 +1,15 @@
 package com.example.core.utils
 
+import com.example.core.data.remote.response.AddBiotilikBody
 import com.example.core.data.remote.response.AddPointBody
+import com.example.core.data.remote.response.BiotilikResult
 import com.example.core.data.remote.response.DetailsItem
 import com.example.core.data.remote.response.LoginBody
 import com.example.core.data.remote.response.PointsItem
 import com.example.core.data.remote.response.RegisterBody
 import com.example.core.data.remote.response.RiversItem
 import com.example.core.data.remote.response.ViewPointsItem
+import com.example.core.domain.model.AddBiotilikModel
 import com.example.core.domain.model.AddPointModel
 import com.example.core.domain.model.LoginModel
 import com.example.core.domain.model.PointModel
@@ -93,6 +96,20 @@ object DataMappers {
             active = "active",
             latitude = latitude.toDouble(),
             longitude = longitude.toDouble()
+        )
+    }
+
+    fun AddBiotilikModel.toBody(): AddBiotilikBody {
+        return AddBiotilikBody(
+            method = "biotilik",
+            data = BiotilikResult(
+                persenEpt = eptPercentage,
+                indeksBiotilik = biotilikIndex,
+                jenisFamili = familyType,
+                jenisEpt = eptType
+            ),
+            seasonId = seasonId,
+            year = year
         )
     }
 }

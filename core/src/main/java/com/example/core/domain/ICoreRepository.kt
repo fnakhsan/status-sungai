@@ -1,7 +1,7 @@
 package com.example.core.domain
 
 import com.example.core.data.Resource
-import com.example.core.data.remote.response.AddBiotilikModel
+import com.example.core.domain.model.AddBiotilikModel
 import com.example.core.domain.model.AddPointModel
 import com.example.core.domain.model.LoginModel
 import com.example.core.domain.model.PointModel
@@ -25,11 +25,11 @@ interface ICoreRepository {
 
     fun getPoints(token: String): Flow<Resource<List<PointModel>>>
 
-    fun getPointById(pointId: String): Flow<Resource<PointModel>>
+    fun getPointById(token: String, pointId: String): Flow<Resource<PointModel>>
 
     fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>>
 
     fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>>
 
-    fun addBiotilik(token: String, addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>>
+    fun addBiotilik(token: String, pointId: String, addBiotilikModel: AddBiotilikModel): Flow<Resource<UiText>>
 }
