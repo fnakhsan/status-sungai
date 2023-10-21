@@ -13,6 +13,7 @@ import com.example.core.domain.model.LoginModel
 import com.example.core.domain.model.PointModel
 import com.example.core.domain.model.RegisterModel
 import com.example.core.domain.model.SegmentModel
+import com.example.core.domain.model.StatusModel
 import com.example.core.utils.DataMappers.toBody
 import com.example.core.utils.DataMappers.toModel
 import com.example.core.utils.UiText
@@ -85,6 +86,19 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     fun getPointById(token: String, id: String): Flow<Resource<PointModel>> = flow {
         emit(Resource.Loading)
         val response = apiService.getPointById(generateBearerToken(token), id).data.toModel().first()
+        emit(Resource.Success(response))
+    }.catch {
+        if (it.message.isNullOrBlank()) {
+            emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+        } else {
+            emit(Resource.Error(UiText.DynamicString(it.message.toString())))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getStatusByPointById(token: String, id: String): Flow<Resource<List<StatusModel>>> = flow {
+        emit(Resource.Loading)
+        val response =
+            apiService.getStatusByPointId(generateBearerToken(token), id).data.toModel()
         emit(Resource.Success(response))
     }.catch {
         if (it.message.isNullOrBlank()) {

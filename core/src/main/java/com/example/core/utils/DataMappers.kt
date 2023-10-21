@@ -8,6 +8,7 @@ import com.example.core.data.remote.response.LoginBody
 import com.example.core.data.remote.response.PointsItem
 import com.example.core.data.remote.response.RegisterBody
 import com.example.core.data.remote.response.RiversItem
+import com.example.core.data.remote.response.StatusItem
 import com.example.core.data.remote.response.ViewPointsItem
 import com.example.core.domain.model.AddBiotilikModel
 import com.example.core.domain.model.AddPointModel
@@ -16,6 +17,7 @@ import com.example.core.domain.model.PointModel
 import com.example.core.domain.model.RegisterModel
 import com.example.core.domain.model.SegmentModel
 import com.example.core.domain.model.FlowPointModel
+import com.example.core.domain.model.StatusModel
 import com.example.core.domain.model.ViewPointModel
 
 object DataMappers {
@@ -88,6 +90,21 @@ object DataMappers {
                 longitude = it.longitude
             )
         }
+    }
+
+    fun List<StatusItem?>?.toModel(): List<StatusModel> {
+        return this?.map {
+            StatusModel(
+                seasonId = it?.seasonId ?: 1,
+                year = it?.year ?: 2023,
+                status = it?.status,
+                date = it?.updatedAt ?: System.currentTimeMillis().toString(),
+                familyType = it?.result?.jenisFamili,
+                eptType = it?.result?.jenisEpt,
+                eptPercentage = it?.result?.persenEpt,
+                biotilikIndex = it?.result?.indeksBiotilik
+            )
+        } ?: emptyList()
     }
 
     fun AddPointModel.toBody(): AddPointBody {

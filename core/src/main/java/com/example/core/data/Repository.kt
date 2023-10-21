@@ -99,8 +99,14 @@ class Repository @Inject constructor(
         }
     }
 
-    override fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>> {
-        TODO("Not yet implemented")
+    override fun getStatusByPointId(token: String, pointId: String): Flow<Resource<List<StatusModel>>> = flow {
+        remoteDataSource.getStatusByPointById(token, pointId).collectLatest {
+            when(it) {
+                Resource.Loading -> emit(Resource.Loading)
+                is Resource.Success -> emit(Resource.Success(it.data))
+                is Resource.Error -> emit(Resource.Error(it.error))
+            }
+        }
     }
 
     override fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>> =

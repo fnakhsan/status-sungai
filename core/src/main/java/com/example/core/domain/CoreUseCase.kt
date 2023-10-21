@@ -27,7 +27,7 @@ interface CoreUseCase {
 
     fun getPointById(token: String, pointId: String): Flow<Resource<PointModel>>
 
-    fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>>
+    fun getStatusByPointId(token: String, pointId: String): Flow<Resource<List<StatusModel>>>
 
     fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>>
 

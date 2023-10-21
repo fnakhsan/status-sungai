@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class GetStatusDataResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>? = null,
+	val data: List<StatusItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class DataItem(
+data class StatusItem(
 
 	@field:SerializedName("point_id")
 	val pointId: Int? = null,

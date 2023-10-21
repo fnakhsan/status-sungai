@@ -43,8 +43,8 @@ class CoreInteractor @Inject constructor(private val coreRepository: ICoreReposi
         return coreRepository.getPointById(token, pointId)
     }
 
-    override fun getStatusByPointId(pointId: String): Flow<Resource<List<StatusModel>>> {
-        return coreRepository.getStatusByPointId(pointId)
+    override fun getStatusByPointId(token: String, pointId: String): Flow<Resource<List<StatusModel>>> {
+        return coreRepository.getStatusByPointId(token, pointId)
     }
 
     override fun addPoint(token: String, addPointModel: AddPointModel): Flow<Resource<UiText>> {
