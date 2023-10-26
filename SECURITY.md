@@ -8,10 +8,12 @@ If you choose to use our Service, then you agree to the collection and use of in
 
 The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are accessible at Status Sungai unless otherwise defined in this Privacy Policy.
 
+Disclaimer: This app does not represent a government entity. All information provided in this app is obtained from reliable public sources. However, we cannot guarantee the accuracy or completeness of the information.
+
 **Information Collection and Use**
 
 For a better experience, while using our Service, we may require you to provide us with certain personally identifiable information. The information that we request will be retained by us and used as described in this privacy policy.
-
+We use the information you provide us to provide services to you. We will not share your information with any third party without your consent.
 The app does use third-party services that may collect information used to identify you.
 
 Link to the privacy policy of third-party service providers used by the app
