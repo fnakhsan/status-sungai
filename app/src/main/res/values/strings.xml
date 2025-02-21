@@ -1,0 +1,147 @@
+<resources>
+    <string name="app_name">Status Sungai</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="invalid_username">Invalid username address</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="password">Password</string>
+    <string name="invalid_password">Password must be at least 8 characters</string>
+    <string name="login_button">Log In</string>
+    <string name="guest_login_button">Log In as Guest</string>
+    <string name="register_dialog">Don\'t have an account yet?</string>
+    <string name="register_text_button">Register here!</string>
+    <string name="login_failed">Login failed</string>
+    <string name="logout">Logout</string>
+    <string name="story_date">Story Date</string>
+    <string name="story_desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto, assumenda dicta doloribus eaque error et eum in ipsa officia quaerat, quas, quo recusandae repudiandae sequi tempore temporibus totam voluptates!</string>
+    <string name="add_point">Add New Point</string>
+    <string name="add_biotilik">Add Biotilik</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="register_title">Create Your Account</string>
+    <string name="name">Name</string>
+    <string name="name_hint">Your Name</string>
+    <string name="register_button">Register</string>
+    <string name="login_dialog">Already have an account?</string>
+    <string name="login_text_button">Login here!</string>
+    <string name="register_failed">Register failed</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description_hint">Write your description…</string>
+    <string name="upload">Upload</string>
+    <string name="thumbnail">Uploaded Image</string>
+    <string name="error_no_image">Please select your image first</string>
+    <string name="error_no_description">Please write your description</string>
+    <string name="error_no_location">Location not found, please try again</string>
+    <string name="error_upload">Failed to upload your story, please try again with proper connection</string>
+    <string name="loading">Wait a moment…</string>
+    <string name="success_upload">Successfully upload your story</string>
+    <string name="setting">Setting</string>
+    <string name="language">Language</string>
+    <string-array name="language_array">
+        <item>English</item>
+        <item>Indonesia</item>
+    </string-array>
+    <string name="title_maps">Maps</string>
+    <string name="title_add">Add</string>
+    <string name="title_profile">Profile</string>
+    <string name="retry">Retry</string>
+    <string name="label_location">Use your location</string>
+    <string name="lat_value">Lat: %1$s</string>
+    <string name="lon_value">Lon: %1$s</string>
+    <string name="or">OR</string>
+    <string name="full_name">Full Name</string>
+    <string name="community">Community</string>
+    <string name="community_hint">Community Name (Optional)</string>
+    <string name="snippet1">Status Sungai: %1$s (%2$s)</string>
+    <string name="snippet2">Index Biotilik: %1$s</string>
+    <string name="status0">Belum Terdefinisi</string>
+    <string name="status1">Tercemar Berat</string>
+    <string name="status2">Tercemar Sedang</string>
+    <string name="status3">Tercemar Ringan</string>
+    <string name="status4">Tidak Tercemar</string>
+    <string name="snack_bar_message">Click open to see details</string>
+    <string name="snack_bar_action">Open</string>
+
+    <string name="point_name">Point Name</string>
+    <string name="label_point_detail">Detail</string>
+    <string name="label_point_status">Point Status</string>
+    <string name="label_point_user">Created by</string>
+    <string name="label_point_date">Created at</string>
+    <string name="label_point_location">Location</string>
+    <string name="label_point_river">River</string>
+    <string name="label_point_lat">Point Latitude</string>
+    <string name="label_point_lng">Point Longitude</string>
+    <string name="point_status">: %1$s</string>
+    <string name="point_user">: %1$s</string>
+    <string name="point_date">: %1$s WIB</string>
+    <string name="point_river">: %1$s</string>
+    <string name="point_lat">: %1$s</string>
+    <string name="point_lng">: %1$s</string>
+    <string name="hello_blank_fragment">halo</string>
+    <string name="biotilik">Biotilik</string>
+    <string name="item_status_value">%1$s dengan skor %2$s</string>
+    <string name="item_date_value">Diambil pada %1$s WIB (Musim %2$s, %3$s)</string>
+    <string name="item_famili_value">Jenis Famili: %1$s</string>
+    <string name="item_ept_value">Jenis EPT: %1$s</string>
+    <string name="item_ept_percent_value">Persen EPT: %1$s %%</string>
+    <string name="item_biotilik_value">Index Biotilik: %1$s %%</string>
+    <string name="famili">Jenis Famili</string>
+    <string name="ept">Jenis EPT</string>
+    <string name="ept_percent">Persen EPT</string>
+    <string name="index_biotilik">Index Biotilik</string>
+    <string name="empty_data">No data found</string>
+    <string name="river">River</string>
+    <string name="season">Season</string>
+    <string name="year">Year</string>
+    <string name="guest">GUEST</string>
+    <string name="title_filter">Filter</string>
+    <string name="title_sort">Sort</string>
+    <string name="filter_alphabetically">Alphabetically</string>
+    <string name="filter_date">Date Added</string>
+    <string-array name="river_array">
+        <item>Sungai Gajah Wong</item>
+        <item>Sungai Boyong</item>
+    </string-array>
+    <string-array name="season_array">
+        <item>Musim Kemarau (April - Oktober)</item>
+        <item>Musim Hujan (November - Maret)</item>
+    </string-array>
+    <string-array name="year_array">
+        <item>2024</item>
+        <item>2023</item>
+        <item>2022</item>
+        <item>2021</item>
+        <item>2020</item>
+        <item>2019</item>
+        <item>2018</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
+        <item>2009</item>
+        <item>2008</item>
+        <item>2007</item>
+        <item>2006</item>
+        <item>2005</item>
+        <item>2004</item>
+        <item>2003</item>
+    </string-array>
+    <string name="lorem">lorem</string>
+
+    <string name="main_home">Status Sungai</string>
+    <string name="main_materi">Materi</string>
+    <string name="main_volunteer">Relawan</string>
+    <string name="main_profile">Profil</string>
+
+    <string name="no_login_error">You are now logged in as a Guest.\nAn account is required to access this content.</string>
+    <string name="open">Open</string>
+    <string name="share">Share</string>
+    <string name="pdfView_page_no" translatable="false">%1$s / %2$s</string>
+</resources>
