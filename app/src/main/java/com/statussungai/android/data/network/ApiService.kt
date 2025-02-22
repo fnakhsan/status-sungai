@@ -8,8 +8,14 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import com.statussungai.android.data.network.model.AddBiotilikModel
 import com.statussungai.android.data.network.model.AddBiotilikResponse
+import com.statussungai.android.data.network.model.AddDetailSegmentModel
+import com.statussungai.android.data.network.model.AddDetailSegmentResponse
 import com.statussungai.android.data.network.model.AddPointModel
 import com.statussungai.android.data.network.model.AddPointResponse
+import com.statussungai.android.data.network.model.AddRiverModel
+import com.statussungai.android.data.network.model.AddRiverResponse
+import com.statussungai.android.data.network.model.AddSegmentModel
+import com.statussungai.android.data.network.model.AddSegmentResponse
 import com.statussungai.android.data.network.model.GetPointByIdResponse
 import com.statussungai.android.data.network.model.GetPointModel
 import com.statussungai.android.data.network.model.GetStatusDataResponse
@@ -79,4 +85,24 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("userId") userId: String
     ): GetUserResponse
+
+    @POST("rivers")
+    suspend fun addRiver(
+        @Header("Authorization") token: String,
+        @Body addRiverModel: AddRiverModel
+    ): AddRiverResponse
+
+    @POST("segments/{riverId}")
+    suspend fun addSegment(
+        @Header("Authorization") token: String,
+        @Path("riverId") riverId: String,
+        @Body addSegmentModel: AddSegmentModel
+    ): AddSegmentResponse
+
+    @POST("segments/detail/{segmentId}")
+    suspend fun addDetailSegment(
+        @Header("Authorization") token: String,
+        @Path("segmentId") segmentId: String,
+        @Body addDetailSegmentModel: AddDetailSegmentModel
+    ): AddDetailSegmentResponse
 }

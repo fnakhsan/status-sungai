@@ -16,7 +16,13 @@ import com.statussungai.android.data.local.datastore.AuthDataStore
 import com.statussungai.android.data.local.datastore.FilterDataStore
 import com.statussungai.android.data.network.ApiService
 import com.statussungai.android.data.network.model.AddBiotilikModel
+import com.statussungai.android.data.network.model.AddDetailSegmentModel
+import com.statussungai.android.data.network.model.AddDetailSegmentResponse
 import com.statussungai.android.data.network.model.AddPointModel
+import com.statussungai.android.data.network.model.AddRiverModel
+import com.statussungai.android.data.network.model.AddRiverResponse
+import com.statussungai.android.data.network.model.AddSegmentModel
+import com.statussungai.android.data.network.model.AddSegmentResponse
 import com.statussungai.android.data.network.model.BiotilikResult
 import com.statussungai.android.data.network.model.DataItem
 import com.statussungai.android.data.network.model.GetUserResponse
@@ -371,6 +377,67 @@ class Repository(
             }
         }
     }.flowOn(Dispatchers.IO)
+
+    fun addRiver(name: String): Flow<Resource<AddRiverResponse>> = channelFlow {
+        send(Resource.Loading)
+        try {
+            getToken().collectLatest { token ->
+                if (token.isNullOrBlank()) {
+                    send(Resource.Error(UiText.DynamicString(UserType.GUEST.type)))
+                } else {
+                    val response = apiService.addRiver(generateBearerToken(token), AddRiverModel(name = name))
+                    send(Resource.Success(response))
+                }
+            }
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun addSegment(riverId: String, name: String): Flow<Resource<AddSegmentResponse>> = channelFlow {
+        send(Resource.Loading)
+        try {
+            getToken().collectLatest { token ->
+                if (token.isNullOrBlank()) {
+                    send(Resource.Error(UiText.DynamicString(UserType.GUEST.type)))
+                } else {
+                    val response = apiService.addSegment(generateBearerToken(token), riverId, AddSegmentModel(name = name, active = "active"))
+                    send(Resource.Success(response))
+                }
+            }
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun addDetailSegment(segmentId: String, flowPoints: List<AddDetailSegmentModel.Data>): Flow<Resource<AddDetailSegmentResponse>> = channelFlow {
+        send(Resource.Loading)
+        try {
+            getToken().collectLatest { token ->
+                if (token.isNullOrBlank()) {
+                    send(Resource.Error(UiText.DynamicString(UserType.GUEST.type)))
+                } else {
+                    val response = apiService.addDetailSegment(generateBearerToken(token), segmentId, AddDetailSegmentModel(flowPoints))
+                    send(Resource.Success(response))
+                }
+            }
+        } catch (e: Exception) {
+            if (e.message.isNullOrBlank()) {
+                send(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+            } else {
+                send(Resource.Error(UiText.DynamicString(e.message.toString())))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
 
     private fun generateBearerToken(token: String): String {
         return if (token.contains("bearer", true)) {
