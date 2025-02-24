@@ -13,3 +13,5 @@ The app aims to help **Communities**, **Environmentalists**, and **Authorities**
 <br>
 
 Previous version can be found [here](https://github.com/fnakhsan/status-sungai-deprecated).
+
+## Features
