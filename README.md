@@ -11,5 +11,5 @@ The app aims to help **Communities**, **Environmentalists**, and **Authorities**
   <img src="https://play.google.com/intl/en/badges/images/badge_new.png" alt="Get it on Google Play" height="30" />
 </a>
 <br>
-<br>
+
 Previous version can be found [here](https://github.com/fnakhsan/status-sungai-deprecated).
