@@ -9,23 +9,24 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.launch
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
 import com.statussungai.android.core.utils.UiText.Companion.asString
 import com.statussungai.android.data.Resource
 import com.statussungai.android.databinding.ActivityAddPointBinding
 import com.statussungai.android.ui.ActivityHelper.setupActivity
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddPointActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddPointBinding
+    private val addPointViewModel: AddPointViewModel by viewModel<AddPointViewModel>()
+
     private lateinit var pointName: String
     private var pointLat: Double? = null
     private var pointLng: Double? = null
@@ -79,11 +80,6 @@ class AddPointActivity : AppCompatActivity() {
             }
             btnAddPoint.setOnClickListener {
                 if (edtPointName.error.isNullOrBlank() && edtPointLat.error.isNullOrBlank() && edtPointLng.error.isNullOrBlank()) {
-                    val factory: ViewModelFactory =
-                        ViewModelFactory.getInstance(this@AddPointActivity)
-                    val addPointViewModel: AddPointViewModel by viewModels {
-                        factory
-                    }
                     pointName = edtPointName.text.toString()
                     pointLat = edtPointLat.text.toString().toDouble()
                     pointLng = edtPointLng.text.toString().toDouble()

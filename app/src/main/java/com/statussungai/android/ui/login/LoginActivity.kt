@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
 import com.statussungai.android.data.Resource
 import com.statussungai.android.databinding.ActivityLoginBinding
@@ -16,18 +14,16 @@ import com.statussungai.android.ui.ActivityHelper.setupActivity
 import com.statussungai.android.ui.components.errorToast
 import com.statussungai.android.ui.home.HomeActivity
 import com.statussungai.android.ui.register.RegisterActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val loginViewModel: LoginViewModel by viewModel<LoginViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setupActivity(activity = this, root = binding.root)
-
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this@LoginActivity)
-        val loginViewModel: LoginViewModel by viewModels {
-            factory
-        }
 
         binding.apply {
             textIsNotBlankListener(edLoginUsername)

@@ -1,12 +1,5 @@
 package com.statussungai.android.data
 
-import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import com.statussungai.android.R
 import com.statussungai.android.core.utils.SeasonType
 import com.statussungai.android.core.utils.SeasonType.Companion.getIdBySeasonValue
@@ -33,6 +26,13 @@ import com.statussungai.android.data.network.model.RegisterModel
 import com.statussungai.android.data.network.model.RegisterResponse
 import com.statussungai.android.data.network.model.SegmentsItem
 import com.statussungai.android.data.network.model.ViewsModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 
 class Repository(
     private val apiService: ApiService,
@@ -229,7 +229,7 @@ class Repository(
                 getRiverId().collectLatest { riverId ->
                     if (riverId != null)
                         send(Resource.Success(response.data.points.filter {
-                            Log.d("sort", "id $riverId")
+                            Timber.d("getAllPoints: $riverId")
                             it.riverId == riverId
                         }))
                 }
@@ -447,15 +447,15 @@ class Repository(
         }
     }
 
-    companion object {
-        @Volatile
-        private var instance: Repository? = null
-        fun getInstance(
-            apiService: ApiService,
-            authDataStore: AuthDataStore,
-            filterDataStore: FilterDataStore
-        ): Repository = instance ?: synchronized(this) {
-            instance ?: Repository(apiService, authDataStore, filterDataStore)
-        }.also { instance = it }
-    }
+//    companion object {
+//        @Volatile
+//        private var instance: Repository? = null
+//        fun getInstance(
+//            apiService: ApiService,
+//            authDataStore: AuthDataStore,
+//            filterDataStore: FilterDataStore
+//        ): Repository = instance ?: synchronized(this) {
+//            instance ?: Repository(apiService, authDataStore, filterDataStore)
+//        }.also { instance = it }
+//    }
 }

@@ -1,28 +1,28 @@
 package com.statussungai.android.ui.biotilik
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.Const.EXTRA_POINT_ID
 import com.statussungai.android.core.utils.SeasonType.Companion.getSeasonTypeById
 import com.statussungai.android.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
 import com.statussungai.android.core.utils.UiText
-import com.statussungai.android.core.utils.UiText.Companion.asString
 import com.statussungai.android.data.Resource
 import com.statussungai.android.data.network.model.BiotilikResult
 import com.statussungai.android.databinding.ActivityAddBiotilikBinding
 import com.statussungai.android.ui.ActivityHelper.setupActivity
 import com.statussungai.android.ui.components.errorToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class AddBiotilikActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddBiotilikBinding
+    private val addBiotilikViewModel: AddBiotilikViewModel by viewModel<AddBiotilikViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBiotilikBinding.inflate(layoutInflater)
@@ -35,12 +35,9 @@ class AddBiotilikActivity : AppCompatActivity() {
             bottomPad = 16
         )
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-        val addBiotilikViewModel: AddBiotilikViewModel by viewModels {
-            factory
-        }
         val pointId = intent.getIntExtra(EXTRA_POINT_ID, 0)
-        Log.d("biotilik", pointId.toString())
+        Timber.d("onCreate: $pointId")
+
         val season = resources.getStringArray(R.array.season_array)
         val year = resources.getStringArray(R.array.year_array)
         val seasonAdapter = ArrayAdapter(this, R.layout.dropdown_item, season)
@@ -64,7 +61,7 @@ class AddBiotilikActivity : AppCompatActivity() {
                     edtSeason.onItemClickListener =
                         OnItemClickListener { _, _, _, id -> //// id contains item if from database
                             seasonId = id.toInt()
-                            Log.d("biotilik", id.toString())
+                            Timber.d("onCreate: $id")
                         }
                     addBiotilikViewModel.addBiotilik(
                         pointId.toString(),
@@ -84,7 +81,7 @@ class AddBiotilikActivity : AppCompatActivity() {
 
                             is Resource.Error -> {
                                 showLoading(false)
-                                Log.d("biotilik", it.error.asString(this@AddBiotilikActivity))
+                                Timber.d("onCreate: ${it.error}")
                                 this@AddBiotilikActivity.errorToast(it.error)
                             }
                         }

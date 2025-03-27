@@ -8,12 +8,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,7 +23,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.snackbar.Snackbar
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.Const.EXTRA_POINT_ID
 import com.statussungai.android.core.utils.RiverStatusUtil.Companion.getStatusById
 import com.statussungai.android.core.utils.Score
@@ -35,10 +32,14 @@ import com.statussungai.android.data.Resource
 import com.statussungai.android.data.network.model.RiversItem
 import com.statussungai.android.data.network.model.ViewPointsItem
 import com.statussungai.android.databinding.FragmentMapsBinding
+import com.statussungai.android.ui.components.errorToast
 import com.statussungai.android.ui.details.DetailsActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MapsFragment : Fragment() {
+
+    private val mapsViewModel: MapsViewModel by viewModel<MapsViewModel>()
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -56,10 +57,6 @@ class MapsFragment : Fragment() {
             isMapToolbarEnabled = true
         }
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-        val mapsViewModel: MapsViewModel by viewModels {
-            factory
-        }
 //        val sydney = LatLng(-34.0, 151.0)
 //        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
@@ -79,11 +76,7 @@ class MapsFragment : Fragment() {
                 is Resource.Error -> {
                     showLoading(false)
                     runOnUiThread {
-                        Toast.makeText(
-                            requireContext(),
-                            it.error.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        requireContext().errorToast(it.error)
                     }
                 }
             }

@@ -1,9 +1,9 @@
 package com.statussungai.android.ui.details
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import timber.log.Timber
 
 class SectionsPagerAdapter(activity: AppCompatActivity, private val pointId: Int) :
     FragmentStateAdapter(activity) {
@@ -11,7 +11,7 @@ class SectionsPagerAdapter(activity: AppCompatActivity, private val pointId: Int
     override fun getItemCount(): Int = 1
 
     override fun createFragment(position: Int): Fragment {
-        Log.d("pointid", "terima $pointId")
+        Timber.d("createFragment: $pointId")
         return DetailFragment.newInstance(position + 1, pointId)
     }
 }

@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class FilterDataStore private constructor(private val dataStore: DataStore<Preferences>) {
+class FilterDataStore(private val dataStore: DataStore<Preferences>) {
     fun getRiverId(): Flow<Int?> {
         return dataStore.data.map { preferences ->
             preferences[RIVER_KEY]
@@ -105,14 +105,14 @@ class FilterDataStore private constructor(private val dataStore: DataStore<Prefe
         private val YEAR_KEY = intPreferencesKey("year")
         private val SORT_ALPHABETICALLY_KEY = booleanPreferencesKey("alphabet")
         private val SORT_DATE_KEY = booleanPreferencesKey("date")
-        @Volatile
-        private var INSTANCE: FilterDataStore? = null
-        fun getInstance(dataStore: DataStore<Preferences>): FilterDataStore {
-            return INSTANCE ?: synchronized(this){
-                val instance = FilterDataStore(dataStore)
-                INSTANCE = instance
-                instance
-            }
-        }
+//        @Volatile
+//        private var INSTANCE: FilterDataStore? = null
+//        fun getInstance(dataStore: DataStore<Preferences>): FilterDataStore {
+//            return INSTANCE ?: synchronized(this){
+//                val instance = FilterDataStore(dataStore)
+//                INSTANCE = instance
+//                instance
+//            }
+//        }
     }
 }

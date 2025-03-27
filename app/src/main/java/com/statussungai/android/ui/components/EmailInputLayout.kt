@@ -6,20 +6,20 @@ import com.google.android.material.textfield.TextInputLayout
 
 class EmailInputLayout : TextInputLayout {
     constructor(context: Context) : super(context) {
-        init()
+//        init()
     }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init()
+//        init()
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
     ) {
-        init()
+//        init()
     }
 
-    private fun init() {
+//    private fun init() {
 //        editText?.addTextChangedListener(object : TextWatcher {
 //            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 //                error =
@@ -39,5 +39,5 @@ class EmailInputLayout : TextInputLayout {
 //                if (s.toString().isNotEmpty() && !Patterns.EMAIL_ADDRESS.matcher(s)
 //                        .matches()
 //                ) error = context.getString(R.string.invalid_email)
-    }
+//    }
 }

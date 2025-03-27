@@ -2,37 +2,37 @@ package com.statussungai.android.ui.add
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.Const.EXTRA_POINT
 import com.statussungai.android.core.utils.ThreadUtil.runOnUiThread
-import com.statussungai.android.core.utils.UiText.Companion.asString
 import com.statussungai.android.data.Resource
 import com.statussungai.android.data.network.model.PointsItem
 import com.statussungai.android.databinding.FragmentAddBinding
+import com.statussungai.android.ui.components.errorToast
 import com.statussungai.android.ui.details.DetailsActivity
 import com.statussungai.android.ui.login.LoginActivity
 import com.statussungai.android.ui.point.AddPointActivity
 import com.statussungai.android.ui.register.RegisterActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class AddFragment : Fragment() {
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
+
+    private val addViewModel: AddViewModel by viewModel<AddViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,39 +75,32 @@ class AddFragment : Fragment() {
             }
         }
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-        val addViewModel: AddViewModel by viewModels {
-            factory
-        }
+//        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
+
         addViewModel.apply {
             getToken().observe(viewLifecycleOwner) { token ->
                 if (token.isNullOrBlank()) {
-                    Log.d("Add", "token null")
+                    Timber.d("onViewCreated: token null")
                     showAddContent(false)
                 } else {
-                    Log.d("Add", "token not null")
+                    Timber.d("onViewCreated: token not null")
                     showAddContent(true)
-                    Log.d("Add", "check")
                     getAllPoints().observe(viewLifecycleOwner) {
                         when (it) {
                             is Resource.Loading -> {
-                                Log.d("Add", "loading")
+                                Timber.d("onViewCreated: loading")
                                 showLoading(true)
                             }
 
                             is Resource.Success -> {
                                 showLoading(false)
-                                Log.d("Add", "sukses")
+                                Timber.d("onViewCreated: ${it.data}")
                                 setListPoints(it.data)
                             }
 
                             is Resource.Error -> {
                                 showLoading(false)
-                                Toast.makeText(
-                                    requireContext(),
-                                    it.error.asString(requireContext()),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                requireContext().errorToast(it.error)
                             }
                         }
                     }
@@ -134,7 +127,7 @@ class AddFragment : Fragment() {
         adapter.setOnItemClickCallback(object : AddAdapter.OnItemClickCallback {
             override fun onItemClicked(data: PointsItem) {
                 val intent = Intent(requireContext(), DetailsActivity::class.java)
-                Log.d("point", "kirim $data")
+                Timber.d("onItemClicked: $data")
                 startActivity(intent.putExtra(EXTRA_POINT, data))
 //                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
 //                val toDetailFragment = HomeFragmentDirections.actionHomeFragmentToDetailActivity()

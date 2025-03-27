@@ -2,16 +2,13 @@ package com.statussungai.android.ui.details
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.Const.EXTRA_POINT
 import com.statussungai.android.core.utils.Const.EXTRA_POINT_ID
 import com.statussungai.android.core.utils.DateTimeConverter.convertDateTime
@@ -22,9 +19,13 @@ import com.statussungai.android.databinding.ActivityDetailsBinding
 import com.statussungai.android.ui.ActivityHelper.setupActivity
 import com.statussungai.android.ui.biotilik.AddBiotilikActivity
 import com.statussungai.android.ui.components.errorToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
+    private val detailsViewModel: DetailsViewModel by viewModel<DetailsViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
@@ -51,11 +52,9 @@ class DetailsActivity : AppCompatActivity() {
             }
         } else {
             val pointId = intent.getIntExtra(EXTRA_POINT_ID, 0)
-            Log.d("point", pointId.toString())
+            Timber.d("onCreate: $pointId")
             setViewPager(pointId)
-            val detailsViewModel: DetailsViewModel by viewModels {
-                ViewModelFactory.getInstance(this)
-            }
+
             detailsViewModel.getPointById(pointId.toString()).observe(this) {
                 when (it) {
                     is Resource.Loading -> {
@@ -93,7 +92,8 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun setViewPager(pointId: Int) {
-        Log.d("pointid", "masuk $pointId")
+        Timber.d("setViewPager: $pointId")
+
         val sectionsPagerAdapter = SectionsPagerAdapter(this, pointId)
         val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter

@@ -3,16 +3,11 @@ package com.statussungai.android.ui.register
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import com.statussungai.android.R
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.TextIsNotBlankUtil.textIsNotBlankListener
 import com.statussungai.android.core.utils.UserType
 import com.statussungai.android.core.utils.UserType.Companion.getTypeByUserType
@@ -22,21 +17,21 @@ import com.statussungai.android.ui.ActivityHelper.setupActivity
 import com.statussungai.android.ui.components.errorToast
 import com.statussungai.android.ui.home.HomeActivity
 import com.statussungai.android.ui.login.LoginActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private val registerViewModel: RegisterViewModel by viewModel<RegisterViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setupActivity(activity = this, root = binding.root)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            Log.d("login", "3")
-            val factory: ViewModelFactory = ViewModelFactory.getInstance(this@RegisterActivity)
-            Log.d("login", "4")
-            val registerViewModel: RegisterViewModel by viewModels {
-                factory
-            }
             binding.apply {
                 textIsNotBlankListener(edRegisterUsername)
                 textIsNotBlankListener(edRegisterFullName)
@@ -46,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
                         val password = edRegisterPassword.text.toString().trim()
                         val fullName = edRegisterFullName.text.toString().trim()
                         val community = edRegisterCommunity.text.toString().trim()
-                        Log.d("login", "1")
+                        Timber.d("onCreate: $username")
                         register(registerViewModel, username, password, fullName, community)
                     } else {
                         Toast.makeText(
@@ -81,9 +76,7 @@ class RegisterActivity : AppCompatActivity() {
         community: String?
     ) {
         lifecycleScope.launch(Dispatchers.IO) {
-            Log.d("login", "10")
             registerViewModel.registerUser(username, password, fullName, community).collect {
-                Log.d("login", "11")
                 when (it) {
                     is Resource.Loading -> {
                         showLoading(true)

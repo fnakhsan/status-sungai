@@ -1,24 +1,25 @@
 package com.statussungai.android.ui.details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.statussungai.android.core.factory.ViewModelFactory
 import com.statussungai.android.core.utils.Const.EXTRA_POINT_ID
 import com.statussungai.android.data.Resource
 import com.statussungai.android.data.network.model.DataItem
 import com.statussungai.android.databinding.FragmentDetailBinding
 import com.statussungai.android.ui.components.errorToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
+    private val detailsViewModel: DetailsViewModel by viewModel<DetailsViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,12 +33,8 @@ class DetailFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvBiotilik.layoutManager = layoutManager
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-        val detailsViewModel: DetailsViewModel by viewModels {
-            factory
-        }
         val argsId = this.arguments?.getInt(EXTRA_POINT_ID)
-        Log.d("pointid", "final $argsId")
+        Timber.d("onViewCreated: $argsId")
         detailsViewModel.getStatusByPointId(argsId.toString()).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
@@ -51,7 +48,7 @@ class DetailFragment : Fragment() {
 
                 is Resource.Error -> {
                     showLoading(false)
-                    Log.d("point", it.error.toString())
+                    Timber.d("onViewCreated: ${it.error}")
                     requireContext().errorToast(it.error)
                 }
             }
