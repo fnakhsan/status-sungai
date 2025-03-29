@@ -75,8 +75,10 @@
         <item name="actionBarTheme">@style/Widget.Material3.AppBarLayout</item>
     </style>
 
-    <style name="SplashScreen" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
+    <style name="SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/HomeTheme</item>
     </style>
 
     <style name="GlassCardOnSurface" parent="@style/Widget.Material3.CardView.Outlined">

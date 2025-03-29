@@ -212,6 +212,7 @@ class MapsFragment : Fragment() {
     private fun showSnackBar(mapsViewModel: MapsViewModel, pointId: Int) {
         mapsViewModel.getRole().observe(viewLifecycleOwner) {
             when (it) {
+                null -> {}
                 UserType.GUEST.type -> {}
                 else -> {
                     Snackbar.make(

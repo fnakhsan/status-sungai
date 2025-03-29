@@ -2,6 +2,7 @@ package com.statussungai.android.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import com.statussungai.android.R
 import com.statussungai.android.databinding.ActivityHomeBinding
@@ -13,6 +14,7 @@ class HomeActivity : AppCompatActivity() {
     //    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setupActivity(activity = this, root = binding.root)
 //        supportFragmentManager.beginTransaction().apply {
